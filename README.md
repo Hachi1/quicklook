@@ -17,3 +17,7 @@ To run QuickLook you need Python 2.7 and following libraries:
 Reading of FLEXPART outputs is accomplished via flex_81.py module by J. Brioude (NOAA).
 
 ### How to use QuickLook? ###
+
+It is quite easy:) QuickLook is a command line tool. To display a list of possible options, simply run
+
+python quick_look.py -h
