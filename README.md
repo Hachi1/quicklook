@@ -134,11 +134,11 @@ Release dates:
 ==================================================================
 ```
 
-We see that we have a backward run of FLEXPART with mother and global mother and a smaller nested domain. The output time step is 3 hours and we have 5 vertical levels 0-4.
+We see that we have a backward run of FLEXPART with a global mother and a smaller nested domain. The output time step is 3 hours and we have 5 vertical levels 0-4.
 
 ### Plotting resuls ###
 
-Now when we know what we have, we can plot the results. We run:
+Now, when we know what we have, we can plot the results. We run:
 
 ```bash
 $ python quic_look.py -i /home/users/radek/run_1/Output -t mother -m -l 0 4
