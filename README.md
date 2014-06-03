@@ -12,6 +12,8 @@ $ git clone https://radekhofman@bitbucket.org/radekhofman/quicklook.git
 
 or you can download the repository as a zip archive from [download](https://bitbucket.org/radekhofman/quicklook/downloads) page.
 
+The software is still under development. The future development should be user-driven so do not hesitate to raise your questions, suggestions or report issues and bugs using [issues reporting system](https://bitbucket.org/radekhofman/quicklook/issues?status=new&status=open). 
+
 ## Licence ##
 
 QuickLook is distributed under [GPL 2.0](http://www.gnu.org/licenses/gpl-2.0.html).
@@ -200,4 +202,4 @@ The idea is to provide a user full control over the QuickLook. As a stub for thi
 * Enable users to easily access more parameters via *config.py* file
 * Include *flex-diff* tool for plotting differences between two FLEXPART runs
 
-If you have any special requirement, please let me know:) The future development of this tool should be user-driven so do not hesitate to raise your queries.
+If you have any special requirement, please let me know:)
