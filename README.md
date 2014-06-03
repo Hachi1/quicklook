@@ -12,7 +12,7 @@ $ git clone https://radekhofman@bitbucket.org/radekhofman/quicklook.git
 
 or you can download the repository as a zip archive from [download](https://bitbucket.org/radekhofman/quicklook/downloads) page.
 
-The software is still under development. The future development should be user-driven so do not hesitate to raise your questions, suggestions or report issues and bugs using [issues reporting system](https://bitbucket.org/radekhofman/quicklook/issues?status=new&status=open). 
+The software is still under development. The future development should be user-driven so do not hesitate to raise your questions, suggestions or report issues and bugs using [issues reporting system](https://bitbucket.org/radekhofman/quicklook/issues?status=new&status=open). Registration to Bitbucket is not needed, just click **+ Create issue** in the top right corner of the page.
 
 ## Licence ##
 
