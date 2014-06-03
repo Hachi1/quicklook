@@ -103,7 +103,7 @@ Release dates:
 ==================================================================
 ==================================================================
 DOMAIN TYPE: nested
-Header info FLEXPART V8.2:
+Header info FLEXPART V9.0:
 Domain:
     Lon: 110.000 - 170.000 deg, step 0.250 deg
     Lat:  15.000 - 60.000 deg, step 0.200 deg
@@ -134,10 +134,10 @@ $ python quic_look.py -i /home/users/radek/run_1/Output -t mother -m -l 0 4
 
 This command says:
 
-* Plot data from /home/users/radek/run_1/Output
-* Use mother domain
-* Take maximum available domain
-* Show integrated values over all levels 0-4
+* Plot data from /home/users/radek/run_1/Output (`-i /home/users/radek/run_1/Output`)
+* Use mother domain (`-t mother`)
+* Take maximum available domain (`-m`)
+* Show integrated values over all levels 0-4 (`-l 0 4`)
 
 ## Configuring and modifying QuickLook ##
 
