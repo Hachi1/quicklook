@@ -187,3 +187,11 @@ To change the map projection from default cylindrical to Mercator use `-z merc`.
 ## Configuring and modifying QuickLook ##
 
 The idea is to provide a user full control over the QuickLook. As a stub for this feature, there is a file *config.py*, where you can configure some properties. Currently, only steps for plotting meridians and parallels for mother and nested domains can be changed.
+
+## TO DOs ##
+
+* Prepare unit tests to maintain consistency in future development:)
+* Enable users to easily access more parameters via *config.py* file
+* INclude *flex-diff* tool for plotting differences between two FLEXPART runs
+
+If you have any special requirement, please let me know:) The future development of this tool should be user-driven so do not hesitate to raise your queries.
