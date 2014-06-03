@@ -21,12 +21,12 @@ Reading of FLEXPART outputs is accomplished via *flex_81.py* module by J. Brioud
 It is quite easy:) QuickLook is a command line tool. To display a list of possible options, simply run
 
 ```bash
-$python quick_look.py -h
+$ python quick_look.py -h
 ```
 
 You shoule get something like this:
 
-```
+```bash
 Usage: quick_look.py [options]
 
 Created by Radek Hofman 2014
