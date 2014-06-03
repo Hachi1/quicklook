@@ -119,3 +119,5 @@ Release dates:
     From 2013/04/07 18:54 to 2013/04/08 06:54
 ==================================================================
 ```
+
+We see that we have a backward run of FLEXPART with mother and global mother and a smaller nested domain. The output time step is 3 hours and we have 5 vertical levels 0-4.
