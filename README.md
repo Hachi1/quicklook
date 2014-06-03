@@ -139,6 +139,27 @@ This command says:
 * Take maximum available domain (`-m`)
 * Show integrated values over all levels 0-4 (`-l 0 4`)
 
+The output should be as follows:
+```bash
+ [INFO] - Taking maximum available domain: (-179.0, -90.0, 179.0, 89.0)
+ [INFO] - No output path provided, results will be saved to /home/users/radek/run_1/Output
+ [INFO] - No filename provided, setting to anim_mother.gif
+ [INFO] - cylindrical projection will be used
+ [INFO] - PDFs will NOT be created
+ [INFO] - PNGs will be created
+ [INFO] -- Minimum date value = 0.0000E+00
+ [INFO] -- Maximum value of data = 1.3717E+03
+ [INFO] -- Processing file 0 grid_time_20130327000000_001
+ [INFO] - Creating animation /home/users/radek/run_1/Output/mother_0-4_anim_mother.gif
+ [INFO] -- Processing file 0 grid_time_20130327000000_001
+ [INFO] -- Processing file 1 grid_time_20130327030000_001
+ [INFO] -- Processing file 2 grid_time_20130327060000_001
+    .
+    .
+    .
+...Done!
+```
+
 What we get is a bunch of PNGs with single time frames and a GIF animation. That was easy, wasn't it?:) Since we did not set any output directory, the output files (frames+animation) are stored in input path. Much better is to define a separate location for this using `-o` flag.
 
 We can further improve our plot.
