@@ -2,11 +2,11 @@
 
 QuickLook is a free command line tool for fast plotting of [FLEXPART](http://www.flexpart.eu) outputs.
 
-### Licence ###
+## Licence ##
 
 QuickLook is distributed under [GPL 2.0](http://www.gnu.org/licenses/gpl-2.0.html)
 
-### Perquisites ###
+## Perquisites ##
 
 To run QuickLook you need Python 2.7 and following libraries:
 
@@ -16,7 +16,7 @@ To run QuickLook you need Python 2.7 and following libraries:
 
 Reading of FLEXPART outputs is accomplished via *flex_81.py* module by J. Brioude (NOAA).
 
-### How to use QuickLook? ###
+## How to use QuickLook? ##
 
 It is quite easy:) QuickLook is a command line tool. To display a list of possible options, simply run
 
@@ -64,3 +64,17 @@ Options:
                         Map projection [cylindrical:cyl (default),
                         Marcator:merc]
 ```
+
+### Explore FLEXPART outputs ###
+
+To get started, let's explore some FLEXPART outputs. To do so, simply run
+```bash
+$ python quic_look.py -e <path_to_output>
+```
+where `<path_to_output>` is path to FLEXPART Output directory, e.g.
+
+```bash
+$ python quic_look.py -e /home/users/radek/run_1/Output
+```
+
+You should get something like:
