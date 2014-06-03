@@ -192,6 +192,6 @@ The idea is to provide a user full control over the QuickLook. As a stub for thi
 
 * Prepare unit tests to maintain consistency in future development:)
 * Enable users to easily access more parameters via *config.py* file
-* INclude *flex-diff* tool for plotting differences between two FLEXPART runs
+* Include *flex-diff* tool for plotting differences between two FLEXPART runs
 
 If you have any special requirement, please let me know:) The future development of this tool should be user-driven so do not hesitate to raise your queries.
