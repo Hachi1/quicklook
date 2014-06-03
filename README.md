@@ -4,7 +4,13 @@ QuickLook is a free command line tool for fast plotting of [FLEXPART](http://www
 
 ![sample.jpg](https://bitbucket.org/repo/dAb4ay/images/3604357401-sample.jpg)
 
-It is written in Python. After obtaining OuickLook from this repository, you can easily modify it according to your needs.
+It is written in Python. After obtaining OuickLook from this repository, you can easily modify it according to your needs. The easiest way how to get QuickLook is to clone the git repository:
+
+```
+git clone https://radekhofman@bitbucket.org/radekhofman/quicklook.git
+```
+
+or you can download the repository as a zip archive from [download](https://bitbucket.org/radekhofman/quicklook/downloads) page.
 
 ## Licence ##
 
