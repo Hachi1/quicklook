@@ -126,8 +126,18 @@ We see that we have a backward run of FLEXPART with mother and global mother and
 
 ### Plotting resuls ###
 
-We decided to 
+Now when we know what we have, we can plot the results. We run:
+
+```bash
+$ python quic_look.py -i /home/users/radek/run_1/Output -t mother -m -l 0 4
+```
+
+This command says:
+* Plot data from */home/users/radek/run_1/Output*
+* Use mother domain
+* Take maximum available domain
+* Show integrated values over all levels 0-4
 
 ## Configuring and modifying QuickLook ##
 
-The idea is to provide a user full control over the QuickLook. As a stub for this feature, there is a file *config.py*, where you can configure some constants, currently only step for plotting meridians and parallels for mother and nested domains.
+The idea is to provide a user full control over the QuickLook. As a stub for this feature, there is a file *config.py*, where you can configure some properties. Currently, only steps for plotting meridians and parallels for mother and nested domains can be changed.
