@@ -26,6 +26,7 @@ $python quick_look.py -h
 
 You shoule get something like this:
 
+```
 Usage: quick_look.py [options]
 
 Created by Radek Hofman 2014
@@ -62,3 +63,4 @@ Options:
   -z PROJECTION, --projection=PROJECTION
                         Map projection [cylindrical:cyl (default),
                         Marcator:merc]
+```
