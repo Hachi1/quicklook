@@ -1,4 +1,4 @@
-# README #
+# QuickLook #
 
 QuickLook is a free command line tool for fast plotting of [FLEXPART](http://www.flexpart.eu) outputs. Like the following one:)
 
