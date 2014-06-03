@@ -139,7 +139,9 @@ This command says:
 * Take maximum available domain (`-m`)
 * Show integrated values over all levels 0-4 (`-l 0 4`)
 
-That was easy, wasn't it?:)
+What we get is a bunch of PNGs with single time frames and a GIF animation. That was easy, wasn't it?:) Since we did not set any output directory, the output files (frames+animation) are stored in input path. Much better is to define a separate location for this using `-o` flag.
+
+We can further improve our plot.
 
 ## Configuring and modifying QuickLook ##
 
