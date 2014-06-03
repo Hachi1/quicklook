@@ -4,15 +4,17 @@ QuickLook is a free command line tool for fast plotting of [FLEXPART](http://www
 
 ## Licence ##
 
-QuickLook is distributed under [GPL 2.0](http://www.gnu.org/licenses/gpl-2.0.html)
+QuickLook is distributed under [GPL 2.0](http://www.gnu.org/licenses/gpl-2.0.html).
 
 ## Perquisites ##
 
-To run QuickLook you need Python 2.7 and following libraries:
+To run QuickLook you need [Python 2.7](https://www.python.org/downloads/) and following libraries:
 
-* Numpy
-* Matplotlib
-* Basemap
+* [Numpy](http://www.numpy.org/)
+* [Matplotlib](http://matplotlib.org/)
+* [Basemap](http://matplotlib.org/basemap/)
+
+For producing GIF animations you also need [ImageMagick](http://www.imagemagick.org/).
 
 Reading of FLEXPART outputs is accomplished via *flex_81.py* module by J. Brioude (NOAA).
 
@@ -121,3 +123,11 @@ Release dates:
 ```
 
 We see that we have a backward run of FLEXPART with mother and global mother and a smaller nested domain. The output time step is 3 hours and we have 5 vertical levels 0-4.
+
+### Plotting resuls ###
+
+We decided to 
+
+## Configuring and modifying QuickLook ##
+
+The idea is to provide a user full control over the QuickLook. As a stub for this feature, there is a file *config.py*, where you can configure some constants, currently only step for plotting meridians and parallels for mother and nested domains.
