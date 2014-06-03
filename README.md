@@ -20,7 +20,9 @@ Reading of FLEXPART outputs is accomplished via *flex_81.py* module by J. Brioud
 
 It is quite easy:) QuickLook is a command line tool. To display a list of possible options, simply run
 
+```
 $python quick_look.py -h
+```
 
 You shoule get something like this:
 
@@ -60,6 +62,3 @@ Options:
   -z PROJECTION, --projection=PROJECTION
                         Map projection [cylindrical:cyl (default),
                         Marcator:merc]
-
-
-
