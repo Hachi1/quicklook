@@ -162,14 +162,24 @@ The output should be as follows:
 
 What we get is a bunch of PNGs with single time frames and a GIF animation. That was easy, wasn't it?:) Since we did not set any output directory, the output files (frames+animation) are stored in input path. Much better is to define a separate location for this using `-o` flag. We can also change the name of our animation using `-n` flag. The type of domain is appended automatically.
 
-We can further improve our plot. We can for example plot points of interest (PIO) into the plot by means of providing a *file* using flag `-r <file_with_POIs>`. The format of the file should be as follows:
+We can further improve our plot. We can for example plot points of interest (PIO) into the plot by means of providing a *file* using flag `-r <file_with_POIs>`. The format of the file should be as follows. Each PIO is on a separate line, where its longitude, latitude and label appears:
 ```
 139.08  36.30 JPX38
 166.61  19.29 USX77
-  .
-  .
-  .
 ```
+ 
+To reduce the domain, use `-d ll_lon, ll_lat, ur_lon, ur_lat`, where parameters are longitude of lower-left corner, latitude of lower-left corner, longitude of upper-right corner, latitude of upper-right corner. This flag is overrided by `-m` flag taking maximum available domain. To select a range of vertical levels which are shows use `-l <level1> <level2>`. If you want to see just one particular level, *level1*=*level2*.
+
+Title of plots can be set using `-x <Title>`. This will appear on all frames. Date-time stamp in tha title is added automatically. You can also set units of colorbar using `-u <Units>`.
+
+If you need to multiply the data before plotting, use `-f <Factor>` which will multiply the data with the *Factor*.
+
+Particularly for backward runs is useful flag `-q`, which forces the output files to be processed in a backward manner.
+
+To produce PDFs instead of default PNGs use `-p` flag.
+
+To change the map projection from default cylindrical to Mercator use `-z merc`. **Warning:** Using of Mercator projection for a domain containing poles will raise an error.
+
 ## Configuring and modifying QuickLook ##
 
 The idea is to provide a user full control over the QuickLook. As a stub for this feature, there is a file *config.py*, where you can configure some properties. Currently, only steps for plotting meridians and parallels for mother and nested domains can be changed.
