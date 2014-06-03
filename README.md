@@ -9,6 +9,7 @@ QuickLook is distributed under [GPL 2.0](http://www.gnu.org/licenses/gpl-2.0.htm
 ### Perquisites ###
 
 To run QuickLook you need Python 2.7 and following libraries:
+
 * Numpy
 * Matplotlib
 * Basemap
@@ -16,4 +17,3 @@ To run QuickLook you need Python 2.7 and following libraries:
 Reading of FLEXPART outputs is accomplished via flex_81.py module by J. Brioude (NOAA).
 
 ### How to use QuickLook? ###
-
