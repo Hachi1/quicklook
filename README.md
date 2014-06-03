@@ -2,28 +2,18 @@
 
 QuickLook is a free command line tool for fast plotting of [FLEXPART](http://www.flexpart.eu) outputs.
 
+### Licence ###
+
+QuickLook is distributed under [GPL 2.0](http://www.gnu.org/licenses/gpl-2.0.html)
+
+### Perquisites ###
+
+To run QuickLook you need Python 2.7 and following libraries:
+* Numpy
+* Matplotlib
+* Basemap
+
+Reading of FLEXPART outputs is accomplished via flex_81.py module by J. Brioude (NOAA).
+
 ### How to use QuickLook? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
