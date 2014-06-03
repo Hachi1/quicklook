@@ -160,10 +160,16 @@ The output should be as follows:
 ...Done!
 ```
 
-What we get is a bunch of PNGs with single time frames and a GIF animation. That was easy, wasn't it?:) Since we did not set any output directory, the output files (frames+animation) are stored in input path. Much better is to define a separate location for this using `-o` flag.
+What we get is a bunch of PNGs with single time frames and a GIF animation. That was easy, wasn't it?:) Since we did not set any output directory, the output files (frames+animation) are stored in input path. Much better is to define a separate location for this using `-o` flag. We can also change the name of our animation using `-n` flag. The type of domain is appended automatically.
 
-We can further improve our plot.
-
+We can further improve our plot. We can for example plot points of interest (PIO) into the plot by means of providing a *file* using flag `-r <file_with_POIs>`. The format of the file should be as follows:
+```
+139.08  36.30 JPX38
+166.61  19.29 USX77
+  .
+  .
+  .
+```
 ## Configuring and modifying QuickLook ##
 
 The idea is to provide a user full control over the QuickLook. As a stub for this feature, there is a file *config.py*, where you can configure some properties. Currently, only steps for plotting meridians and parallels for mother and nested domains can be changed.
