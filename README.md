@@ -139,6 +139,8 @@ This command says:
 * Take maximum available domain (`-m`)
 * Show integrated values over all levels 0-4 (`-l 0 4`)
 
+That was easy, wasn't it?:)
+
 ## Configuring and modifying QuickLook ##
 
 The idea is to provide a user full control over the QuickLook. As a stub for this feature, there is a file *config.py*, where you can configure some properties. Currently, only steps for plotting meridians and parallels for mother and nested domains can be changed.
