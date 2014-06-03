@@ -133,7 +133,7 @@ $ python quic_look.py -i /home/users/radek/run_1/Output -t mother -m -l 0 4
 ```
 
 This command says:
-* Plot data from */home/users/radek/run_1/Output*
+* Plot data from /home/users/radek/run_1/Output
 * Use mother domain
 * Take maximum available domain
 * Show integrated values over all levels 0-4
