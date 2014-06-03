@@ -189,7 +189,7 @@ def main(argv=None):
         if not projection in projs.keys():
             print ERR+" - Projection type '%s' not supported" % projection
             sys.exit(1)
-        print INFO+" - %s projection will be used" % projs[opts.projection]            
+        print INFO+" - %s projection will be used" % projs[projection]            
         
         
         

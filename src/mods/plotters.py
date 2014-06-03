@@ -88,7 +88,7 @@ def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, l
     m.drawmeridians(meridians,labels=[True,False,False,True],fontsize=10)   
     
     m.drawcoastlines()
-    m.drawstates()
+    #m.drawstates()
     m.drawcountries()
     
     #plotting of receptors:
