@@ -141,12 +141,12 @@ We see that we have a backward run of FLEXPART with a global mother and a smalle
 Now, when we know what we have, we can plot the results. We run:
 
 ```bash
-$ python quic_look.py -i /home/users/radek/run_1/Output -t mother -m -l 0 4
+$ python quic_look.py -i /home/radek/run_1/Output -t mother -m -l 0 4
 ```
 
 This command says:
 
-* Plot data from /home/users/radek/run_1/Output (`-i /home/users/radek/run_1/Output`)
+* Plot data from /home/users/radek/run_1/Output (`-i /home/radek/run_1/Output`)
 * Use mother domain (`-t mother`)
 * Take maximum available domain (`-m`)
 * Show integrated values over all levels 0-4 (`-l 0 4`)
@@ -154,7 +154,7 @@ This command says:
 The output should be as follows:
 ```bash
  [INFO] - Taking maximum available domain: (-179.0, -90.0, 179.0, 89.0)
- [INFO] - No output path provided, results will be saved to /home/users/radek/run_1/Output
+ [INFO] - No output path provided, results will be saved to /home/radek/run_1/Output
  [INFO] - No filename provided, setting to anim_mother.gif
  [INFO] - cylindrical projection will be used
  [INFO] - PDFs will NOT be created
@@ -162,7 +162,7 @@ The output should be as follows:
  [INFO] -- Minimum date value = 0.0000E+00
  [INFO] -- Maximum value of data = 1.3717E+03
  [INFO] -- Processing file 0 grid_time_20130327000000_001
- [INFO] - Creating animation /home/users/radek/run_1/Output/mother_0-4_anim_mother.gif
+ [INFO] - Creating animation /home/radek/run_1/Output/mother_0-4_anim_mother.gif
  [INFO] -- Processing file 0 grid_time_20130327000000_001
  [INFO] -- Processing file 1 grid_time_20130327030000_001
  [INFO] -- Processing file 2 grid_time_20130327060000_001
@@ -174,10 +174,9 @@ The output should be as follows:
 
 What we get is a bunch of PNGs with single time frames and a GIF animation. That was easy, wasn't it?:) Since we did not set any output directory, the output files (frames+animation) are stored in input path. Much better is to define a separate location for this using `-o` flag. We can also change the name of our animation using `-n` flag. The type of domain and selected vertical levels are appended automatically.
 
-We can further improve our plot. We can for example plot points of interest (PIO) into the plot by means of providing a *file* using flag `-r <file_with_POIs>`. The format of the file should be as follows. Each PIO is on a separate line, where its longitude, latitude and label appears:
+We can further improve our plot. We can for example plot points of interest (PIO) into the plot by means of providing a *file* using flag `-r <file_with_POIs>`. The format of the file should be as follows. Each PIO is on a separate line, where its longitude, latitude and label appear:
 ```
 139.08  36.30 JPX38
-166.61  19.29 USX77
 ```
  
 To reduce the domain, use `-d ll_lon, ll_lat, ur_lon, ur_lat`, where parameters are longitude of lower-left corner, latitude of lower-left corner, longitude of upper-right corner, latitude of upper-right corner. This flag is overrided by `-m` flag taking maximum available domain. To select a range of vertical levels which are shows use `-l <level1> <level2>`. If you want to see just one particular level, *level1*=*level2*.
