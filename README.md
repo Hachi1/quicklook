@@ -100,7 +100,7 @@ Header info FLEXPART V9.0:
 Domain:
     Lon: -179.000 - 179.000 deg, step 1.000 deg
     Lat:  -90.000 - 89.000 deg, step 1.000 deg
-Output leves:
+Output levels:
      0 100.0 m
      1 500.0 m
      2 1000.0 m
@@ -119,7 +119,7 @@ Header info FLEXPART V9.0:
 Domain:
     Lon: 110.000 - 170.000 deg, step 0.250 deg
     Lat:  15.000 - 60.000 deg, step 0.200 deg
-Output leves:
+Output levels:
      0 100.0 m
      1 500.0 m
      2 1000.0 m
