@@ -1,6 +1,6 @@
 # News #
 
-* pcolormesh and imshow added, look into *config.py*!
+* **pcolormesh** and **imshow** added, look into *config.py*!
 * Test data for backward run added, see **Test data and examples** Section!
 
 
@@ -14,7 +14,7 @@ QuickLook is a free command-line tool for quick plotting of [FLEXPART](http://ww
 
 ![nested_0-4_anim_nested.gif](https://bitbucket.org/repo/dAb4ay/images/1638661161-nested_0-4_anim_nested.gif)
 
-It is written in pure Python. After obtaining OuickLook from this repository, you can easily modify it according to your needs. The easiest way how to get QuickLook is to clone the git repository:
+It is written in pure Python 2.7, so no compilation nor installation is required. You just need to fulfill all prerequisites and install all needed libraries. After obtaining OuickLook from this repository, you can easily modify it according to your needs. The easiest way how to get QuickLook is to clone the git repository:
 
 ```bash
 $ git clone https://radekhofman@bitbucket.org/radekhofman/quicklook.git
