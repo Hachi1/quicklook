@@ -201,7 +201,13 @@ Generally, virtually everything can be changed by modifying the source code of Q
 
 ## Test data ##
 
-Test data for backward run of FLEXPART are available in `test_data/bwd_run` in the root of the repository. Data for a forward run will follow soon.
+Test data for backward run of FLEXPART are available in `test_data/bwd_run` in the root of the repository. You can run the example by executing the following command from `src` directory:
+
+```bash
+$ python quick_look.py -i ../test_data/bwd_run -t mother -m -l 0 4 -r ../test_data/receprors.txt -x "Backward run from JPX38" -u "(mBq/GBq)" -o ../samples/
+```
+
+Data for a forward run will follow soon.
 
 ## TO DOs ##
 
