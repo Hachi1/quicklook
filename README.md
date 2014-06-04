@@ -1,3 +1,8 @@
+# News #
+
+* pcolormesh and imshow added!
+
+
 # QuickLook #
 
 ## Introduction ##
