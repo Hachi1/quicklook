@@ -1,7 +1,7 @@
 # News #
 
-* pcolormesh and imshow added!
-* Test data for backward run added, see ## Test data and examples ## Section!
+* pcolormesh and imshow added, look into *config.py*!
+* Test data for backward run added, see **Test data and examples** Section!
 
 
 # QuickLook #
