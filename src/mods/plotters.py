@@ -134,7 +134,7 @@ def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, l
         #r_lon = receptor[0]
         #r_lat = receptor[1]
         r_lon, r_lat = m(receptor[0], receptor[1])
-        m.plot(r_lon, r_lat, marker=cf.POI_MARKER, markersize=cf.POI_MARKER_SIZE)
+        m.plot(r_lon, r_lat, cf.POI_MARKER, markersize=cf.POI_MARKER_SIZE)
         plt.text(r_lon+cf.TEXT_OFFSET, r_lat+cf.TEXT_OFFSET, receptor[2])
     
     date_str = get_date_from_fname(grids[nframe])
