@@ -1,7 +1,7 @@
 # News #
 
 * pcolormesh and imshow added!
-* test data for backward run added!
+* Test data for backward run added, see ## Test data and examples ## Section!
 
 
 # QuickLook #
