@@ -200,7 +200,7 @@ def make_animation(header, grids, domain, data_factor, FLEXPART_output_dir, lon0
     outlat0 = header["outlat0"][0]
         
     
-    fig = plt.figure(figsize=(12,10))
+    fig = plt.figure(figsize=(cf.FIG_X,cf.FIG_Y))
     m = Basemap(projection=projection,
                 llcrnrlon = lon0, llcrnrlat = lat0,
                 urcrnrlon = lon1, urcrnrlat = lat1,

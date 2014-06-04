@@ -6,7 +6,8 @@ configuration file for quick_look
 '''
 import matplotlib.pyplot as plt
 
-
+FIG_X = 12 # size of figure in x
+FIG_Y =  8 # size of figure in y
 
 MOTHER_MER_STEP = 20.0  # step of meridians for mother domain in degrees
 MOTHER_PAR_STEP = 20.0  # step of meridians for mother domain in degrees
