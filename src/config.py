@@ -6,17 +6,17 @@ configuration file for quick_look
 '''
 import matplotlib.pyplot as plt
 
-FIG_X = 12 # size of figure in x
-FIG_Y =  8 # size of figure in y
+FIG_X = 9 # size of figure in x
+FIG_Y =  5 # size of figure in y
 
-MOTHER_MER_STEP = 20.0  # step of meridians for mother domain in degrees
-MOTHER_PAR_STEP = 20.0  # step of meridians for mother domain in degrees
+MOTHER_MER_STEP = 30.0  # step of meridians for mother domain in degrees
+MOTHER_PAR_STEP = 30.0  # step of meridians for mother domain in degrees
 
-NESTED_MER_STEP = 5.0  # step of meridians for mother domain in degrees
-NESTED_PAR_STEP = 5.0  # step of meridians for mother domain in degrees
+NESTED_MER_STEP = 10.0  # step of meridians for mother domain in degrees
+NESTED_PAR_STEP = 10.0  # step of meridians for mother domain in degrees
 
 PLOT_METHOD = "pcolormesh" # "contourf" | "imshow" | "pcolormesh"
-ALPHA = 0.8 # transparency of 2d plots, 0 - 1, where 1 means no transparency at all 
+ALPHA = 0.7 # transparency of 2d plots, 0 - 1, where 1 means no transparency at all 
 LOG_FLAG = True #logarithmic scale, set false for linear scale
 
 #log scale now assumes, that 1 step in levels is 1 order of magnitude
@@ -27,7 +27,7 @@ NUMBER_OF_LEVELS = 10 #number of levels for linear scale, equidistant levels LIN
 LIN_LEVELS_MIN = -999 #minimum of linear levels, use -999 for real data minimum
 LIN_LEVELS_MAX = -999 #maximum of linear levels, use -999 for real data maximum
 
-C_MAP = plt.cm.bone_r # use matplotlib colormaps, list is avalibale at http://wiki.scipy.org/Cookbook/Matplotlib/Show_colormaps
+C_MAP = plt.cm.jet # use matplotlib colormaps, list is avalibale at http://wiki.scipy.org/Cookbook/Matplotlib/Show_colormaps
 
 DATE_FORMAT_OUT = "%Y-%m-%d %H:%M" # format of date displayed in title of frames
 
@@ -37,5 +37,5 @@ POI_MARKER_SIZE = 6 # size of POI MARKER
 
 PNGS_FLAG = True # do we want to produce PNGs?
 
-BASEMAP_RESOLUTION = 'l' # resolution of map:  'c' (crude - fast), 'l' (low), 'i' (intermediate), 'h' (high), 'f' (full - slow) 
+BASEMAP_RESOLUTION = 'c' # resolution of map:  'c' (crude - fast), 'l' (low), 'i' (intermediate), 'h' (high), 'f' (full - slow) 
 BASEMAP_AREA_THR = 10000 # basemap area threshold
