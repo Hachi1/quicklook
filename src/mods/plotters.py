@@ -9,7 +9,7 @@ import matplotlib.animation
 import os
 from mods import flex_81
 from mods import data_tools
-from matplotlib.colors import LogNorm
+from matplotlib.colors import LogNorm, Normalize
 import math
 import datetime
 import sys
@@ -17,10 +17,7 @@ sys.path.append("../")
 import config as cf
 
 DATE_FORMAT_IN = "%Y%m%d%H%M%S"
-DATE_FORMAT_OUT = "%Y-%m-%d %H:%M"
 
-NUMBER_OF_LEVELS = 10
-TEXT_OFFSET = 0.2 #in degrees
 counter = 0
 
 ERR = "[ERROR]"
@@ -33,7 +30,7 @@ def get_date_from_fname(fname):
     """
     dtime = datetime.datetime.strptime(fname.split("_")[-2], DATE_FORMAT_IN)
     
-    d = dtime.strftime(DATE_FORMAT_OUT)
+    d = dtime.strftime(cf.DATE_FORMAT_OUT)
     return d
 
 def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, lon0, lon1, lat0, lat1, z0, z1, m, x, y, min_d, max_d, receptors, unitlabel, pdf, imagedir, title, log_flag=True):
@@ -54,16 +51,57 @@ def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, l
     else: #just the values from one selected level
         data = grid[:,:,z0].transpose()
                 
-    if log_flag: #log scale
-        maxumim_order = math.ceil(math.log10(max_d))
+    if cf.LOG_FLAG: #log scale
+        if cf.LOG_LEVELS_MAX == - 999:
+            cf.LOG_LEVELS_MAX = math.ceil(math.log10(max_d))
         orders = 10 #we go back 10 orders from maxima
-        levels = numpy.logspace(maxumim_order-orders, maxumim_order, orders+1)
-        c1 = m.contourf(x, y, data, latlon=False, levels=levels, norm = LogNorm())
+        levels = numpy.logspace(cf.LOG_LEVELS_MAX-cf.NUMBER_OF_ORDERS, cf.LOG_LEVELS_MAX, cf.NUMBER_OF_ORDERS+1)
+        if cf.PLOT_METHOD == "contourf":
+            c1 = m.contourf(x, y, data, latlon=False, levels=levels, norm=LogNorm(), cmap=cf.C_MAP, alpha=cf.ALPHA)
+        elif cf.PLOT_METHOD == "imshow":
+            c1 = m.imshow(data, 
+                          interpolation='nearest', 
+                          extent=(lon0, lon1, lat0, lat1), 
+                          origin='lower', 
+                          alpha=cf.ALPHA, #transparency
+                          cmap=cf.C_MAP, #colormap
+                          norm=LogNorm(vmin=levels[0], vmax=levels[-1]))
+        elif cf.PLOT_METHOD == "pcolormesh":
+            c1 = m.pcolormesh(x, y, data, 
+                              #shading='gouraud', 
+                              norm=LogNorm(vmin=levels[0], vmax=levels[-1]), 
+                              cmap=cf.C_MAP, 
+                              alpha=cf.ALPHA)
+        else:
+            print ERR, "Wrong plot method %s , exiting..." % cf.PLOT_METHOD 
+            sys.exit(1)                        
     else: #linear scale
         #small offset added to min to exclude zeros
-        levels = numpy.linspace(min_d+1.0E-50, max_d, NUMBER_OF_LEVELS)
-        c1 = m.contourf(x, y, data, latlon=False, levels=levels)
-        
+        if cf.LIN_LEVELS_MAX == -999:
+            cf.LIN_LEVELS_MAX = max_d
+        if cf.LIN_LEVELS_MIN == -999:
+            cf.LIN_LEVELS_MIN = min_d
+             
+        levels = numpy.linspace(cf.LIN_LEVELS_MIN, cf.LIN_LEVELS_MAX, cf.NUMBER_OF_LEVELS)
+        if cf.PLOT_METHOD == "contourf":
+            c1 = m.contourf(x, y, data, latlon=False, levels=levels, cmap=cf.C_MAP, alpha=cf.ALPHA)
+        elif cf.PLOT_METHOD == "imshow":
+            c1 = m.imshow(data, 
+                          interpolation='nearest', 
+                          extent=(lon0, lon1, lat0, lat1), 
+                          origin='lower', 
+                          alpha=cf.ALPHA,
+                          cmap=cf.C_MAP,
+                          norm=Normalize(vmin=levels[0], vmax=levels[-1]))
+        elif cf.PLOT_METHOD == "pcolormesh":
+            c1 = m.pcolormesh(x, y, data, 
+                              #shading='gouraud', 
+                              norm=Normalize(vmin=levels[0], vmax=levels[-1]), 
+                              cmap=cf.C_MAP, 
+                              alpha=cf.ALPHA)            
+        else:
+            print ERR, "Wrong plot method %s , exiting..." % cf.PLOT_METHOD
+            sys.exit(1)
     if counter == 0:
         cbar = m.colorbar(c1, location="bottom", pad="7%")
         cbar.set_label(unitlabel)
@@ -74,11 +112,11 @@ def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, l
     #draw parallels
 
     if domain == "nested":
-        par_step = cf.nested_par_step
-        mer_step = cf.nested_mer_step
+        par_step = cf.NESTED_PAR_STEP
+        mer_step = cf.NESTED_MER_STEP
     else:
-        par_step = cf.mother_par_step
-        mer_step = cf.mother_mer_step
+        par_step = cf.MOTHER_PAR_STEP
+        mer_step = cf.MOTHER_MER_STEP
 
     parallels = numpy.arange(-90.,90.,par_step)
     m.drawparallels(parallels,labels=[True,False,False,True],fontsize=10)
@@ -96,20 +134,20 @@ def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, l
         #r_lon = receptor[0]
         #r_lat = receptor[1]
         r_lon, r_lat = m(receptor[0], receptor[1])
-        m.plot(r_lon, r_lat, 'bo', markersize=8)
-        plt.text(r_lon+TEXT_OFFSET, r_lat+TEXT_OFFSET, receptor[2])
+        m.plot(r_lon, r_lat, marker=cf.POI_MARKER, markersize=cf.POI_MARKER_SIZE)
+        plt.text(r_lon+cf.TEXT_OFFSET, r_lat+cf.TEXT_OFFSET, receptor[2])
     
     date_str = get_date_from_fname(grids[nframe])
     
     plt.title(title+" ("+date_str+")")
     counter += 1
 
-    pngs = True
+
 
     if pdf: #pdfs will be also saved
         plt.savefig(imagedir+os.sep+domain+"_"+str(int(z0))+"-"+str(int(z1))+"_frame_%03d.pdf" % nframe)
   
-    elif pngs:
+    if cf.PNGS_FLAG: #produce PNGs?
         plt.savefig(imagedir+os.sep+domain+"_"+str(int(z0))+"-"+str(int(z1))+"_frame_%03d.png" % nframe)
 
 
@@ -166,7 +204,7 @@ def make_animation(header, grids, domain, data_factor, FLEXPART_output_dir, lon0
     m = Basemap(projection=projection,
                 llcrnrlon = lon0, llcrnrlat = lat0,
                 urcrnrlon = lon1, urcrnrlat = lat1,
-                resolution='l', area_thresh=100000)    
+                resolution=cf.BASEMAP_RESOLUTION, area_thresh=cf.BASEMAP_AREA_THR)    
          
     
     #this is better I think than the originla script
