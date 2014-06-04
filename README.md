@@ -1,10 +1,10 @@
 # QuickLook #
 
-QuickLook is a free command line tool for fast plotting of [FLEXPART](http://www.flexpart.eu) outputs. Like the following one:)
+QuickLook is a free command-line tool for quick plotting of [FLEXPART](http://www.flexpart.eu) outputs. Like the following one:)
 
 ![sample.jpg](https://bitbucket.org/repo/dAb4ay/images/3604357401-sample.jpg)
 
-It is written in Python. After obtaining OuickLook from this repository, you can easily modify it according to your needs. The easiest way how to get QuickLook is to clone the git repository:
+It is written in pure Python. After obtaining OuickLook from this repository, you can easily modify it according to your needs. The easiest way how to get QuickLook is to clone the git repository:
 
 ```bash
 $ git clone https://radekhofman@bitbucket.org/radekhofman/quicklook.git
@@ -32,7 +32,7 @@ Reading of FLEXPART outputs is accomplished via *flex_81.py* module by J. Brioud
 
 ## How to use QuickLook? ##
 
-It is quite easy:) QuickLook is a command line tool. To display a list of possible options, simply run
+It is quite easy:) QuickLook is a command-line tool. To display a list of possible options, simply run
 
 ```bash
 $ python quick_look.py -h
@@ -81,14 +81,14 @@ Options:
 
 ### Explore FLEXPART outputs ###
 
-To get started, let's explore some FLEXPART outputs. To do so, simply run
+To get started, let's explore some FLEXPART outputs. To do so, execute command
 ```bash
 $ python quic_look.py -e <path_to_output>
 ```
 where `<path_to_output>` is path to FLEXPART Output directory, e.g.
 
 ```bash
-$ python quic_look.py -e /home/users/radek/run_1/Output
+$ python quic_look.py -e /home/radek/run_1/Output
 ```
 
 You should get something like:
@@ -136,7 +136,7 @@ Release dates:
 
 We see that we have a backward run of FLEXPART with a global mother and a smaller nested domain. The output time step is 3 hours and we have 5 vertical levels 0-4.
 
-### Plotting resuls ###
+### Plotting results ###
 
 Now, when we know what we have, we can plot the results. We run:
 
@@ -146,9 +146,9 @@ $ python quic_look.py -i /home/radek/run_1/Output -t mother -m -l 0 4
 
 This command says:
 
-* Plot data from /home/users/radek/run_1/Output (`-i /home/radek/run_1/Output`)
+* Plot data from /home/radek/run_1/Output (`-i /home/radek/run_1/Output`)
 * Use mother domain (`-t mother`)
-* Take maximum available domain (`-m`)
+* Take maximum available lon-lat range (`-m`)
 * Show integrated values over all levels 0-4 (`-l 0 4`)
 
 The output should be as follows:
@@ -172,28 +172,28 @@ The output should be as follows:
 ...Done!
 ```
 
-What we get is a bunch of PNGs with single time frames and a GIF animation. That was easy, wasn't it?:) Since we did not set any output directory, the output files (frames+animation) are stored in input path. Much better is to define a separate location for this using `-o` flag. We can also change the name of our animation using `-n` flag. The type of domain and selected vertical levels are appended automatically.
+What we get is a bunch of PNGs with single time frames and a GIF animation. That was easy, wasn't it?:) Since we did not set any output directory, the output files (frames+animation) are stored in input path. Much better is to define a separate location for this using `-o` flag. We can also change the name of our animation using `-n` flag. The type of domain and selected vertical levels are appended automatically to the file name.
 
-We can further improve our plot. We can for example plot points of interest (PIO) into the plot by means of providing a *file* using flag `-r <file_with_POIs>`. The format of the file should be as follows. Each PIO is on a separate line, where its longitude, latitude and label appear:
+We can further improve our plot. For example, we can plot points of interest (PIO) into the plot by the means of providing a *file* using flag `-r <file_with_POIs>`. The format of the file should be as follows. Each PIO is on a separate line, where its longitude, latitude and label appear:
 ```
 139.08  36.30 JPX38
 ```
  
-To reduce the domain, use `-d ll_lon, ll_lat, ur_lon, ur_lat`, where parameters are longitude of lower-left corner, latitude of lower-left corner, longitude of upper-right corner, latitude of upper-right corner. This flag is overrided by `-m` flag taking maximum available domain. To select a range of vertical levels which are shows use `-l <level1> <level2>`. If you want to see just one particular level, *level1*=*level2*.
+To plot a sub-domain instead of the whole domain, use `-d ll_lon, ll_lat, ur_lon, ur_lat`, where parameters are longitude of lower-left corner, latitude of lower-left corner, longitude of upper-right corner and latitude of upper-right corner. This flag is overridden by `-m` flag taking maximum available domain. To select a range of vertical levels which are shown use `-l <level1> <level2>`. If you want to see just one particular level, then set *level1*=*level2*.
 
-Title of plots can be set using `-x <Title>`. This will appear on all frames. Date-time stamp in tha title is added automatically. You can also set units of colorbar using `-u <Units>`.
+Title of plots can be set using `-x <Title>`. This will appear on all frames. Date-time stamp in the title is added automatically. You can also set units which will appear under the colorbar using `-u <Units>`.
 
-If you need to multiply the data before plotting, use `-f <Factor>` which will multiply the data with the *Factor*.
+If you need to multiply the data by a *Factor* before plotting, use `-f <Factor>`.
 
 Particularly for backward runs is useful flag `-q`, which forces the output files to be processed in a backward manner.
 
-To produce PDFs instead of default PNGs use `-p` flag.
+To produce PDFs instead of default PNGs, use `-p` flag.
 
-To change the map projection from default cylindrical to Mercator use `-z merc`. **Warning:** Using of Mercator projection for a domain containing poles will raise an error.
+To change the map projection from default cylindrical to Mercator, use `-z merc`. **Warning:** Using of Mercator projection for a domain containing poles will raise an error.
 
 ## Configuring and modifying QuickLook ##
 
-The idea is to provide a user full control over the QuickLook. As a stub for this feature, there is a file *config.py*, where you can configure some properties. Currently, only steps for plotting meridians and parallels for mother and nested domains can be changed.
+Generally, virtually everything can be changed by modifying the source code of QuickLook. However, the goal is to provide a full control over the appearance of plots via a configuration file. As a stub for this feature, there is a file *config.py*, where you can configure some properties. Currently, only steps for plotting meridians and parallels for mother and nested domains can be adjusted.
 
 ## TO DOs ##
 
@@ -201,4 +201,4 @@ The idea is to provide a user full control over the QuickLook. As a stub for thi
 * Enable users to easily access more parameters via *config.py* file
 * Include *flex-diff* tool for plotting differences between two FLEXPART runs
 
-If you have any special requirement, please let me know:)
+If you have any special requirement, please let me know via [issues reporting system](https://bitbucket.org/radekhofman/quicklook/issues?status=new&status=open):)
