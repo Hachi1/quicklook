@@ -1,8 +1,12 @@
 # QuickLook #
 
-QuickLook is a free command-line tool for quick plotting of [FLEXPART](http://www.flexpart.eu) outputs. Like the following one:)
+## Introduction ##
 
-![sample.jpg](https://bitbucket.org/repo/dAb4ay/images/3604357401-sample.jpg)
+QuickLook is a free command-line tool for quick plotting of [FLEXPART](http://www.flexpart.eu) outputs. Like the following ones:)
+
+![mother_0-4_anim_mother.gif](https://bitbucket.org/repo/dAb4ay/images/453387557-mother_0-4_anim_mother.gif)
+
+![nested_0-4_anim_nested.gif](https://bitbucket.org/repo/dAb4ay/images/1638661161-nested_0-4_anim_nested.gif)
 
 It is written in pure Python. After obtaining OuickLook from this repository, you can easily modify it according to your needs. The easiest way how to get QuickLook is to clone the git repository:
 
@@ -18,7 +22,7 @@ The software is still under development. The future development should be user-d
 
 QuickLook is distributed under [GPL 2.0](http://www.gnu.org/licenses/gpl-2.0.html).
 
-## Perquisites ##
+## Prerequisites ##
 
 To run QuickLook you need [Python 2.7](https://www.python.org/downloads/) and following libraries:
 
