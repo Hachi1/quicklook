@@ -65,7 +65,7 @@ def domain_info_short(header):
     print "    Lat:  %4.3f - %4.3f deg, step %4.3f deg" % (header["outlat0"][0], 
                                                                 header["outlat0"][0]+(header["numygrid"][0]-1)*header["dyout"][0], 
                                                                 header["dyout"][0])
-    print "Output leves:"
+    print "Output levels:"
     for i, lev in enumerate(header["outheight"]):
         print "    ", i, str(lev), "m"
 
