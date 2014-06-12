@@ -37,5 +37,5 @@ POI_MARKER_SIZE = 6 # size of POI MARKER
 
 PNGS_FLAG = True # do we want to produce PNGs?
 
-BASEMAP_RESOLUTION = 'c' # resolution of map:  'c' (crude - fast), 'l' (low), 'i' (intermediate), 'h' (high), 'f' (full - slow) 
+BASEMAP_RESOLUTION = 'h' # resolution of map:  'c' (crude - fast), 'l' (low), 'i' (intermediate), 'h' (high), 'f' (full - slow) 
 BASEMAP_AREA_THR = 10000 # basemap area threshold
