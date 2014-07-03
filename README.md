@@ -187,8 +187,6 @@ The output should be as follows:
  [INFO] - No output path provided, results will be saved to /home/radek/run_1/Output
  [INFO] - No filename provided, setting to anim_mother.gif
  [INFO] - cylindrical projection will be used
- [INFO] - PDFs will NOT be created
- [INFO] - PNGs will be created
  [INFO] -- Minimum date value = 0.0000E+00
  [INFO] -- Maximum value of data = 1.3717E+03
  [INFO] -- Processing file 0 grid_time_20130327000000_001
