@@ -6,8 +6,14 @@ configuration file for quick_look
 '''
 import matplotlib.pyplot as plt
 
-FIG_X = 12 # size of figure in x
-FIG_Y =  10 # size of figure in y
+#file suffixes to distinguish different outputs  
+FILE_NAMES = ["",    #suffix for conc/residence times 
+              "_dd",  #suffix for dry depo]
+              "-wd",  #suffix for wet depo
+              "_dwd"] #suffix for dry and wet depo
+
+FIG_X = 10 # size of figure in x
+FIG_Y =  8 # size of figure in y
 
 MOTHER_MER_STEP = 30.0  # step of meridians for mother domain in degrees
 MOTHER_PAR_STEP = 30.0  # step of meridians for mother domain in degrees
@@ -39,7 +45,7 @@ PNGS_FLAG = False # do we want to produce PNGs?
 JPGS_FLAG = True # do we want to produce JPGs?
 PDFS_FLAG = False # do we want to produce PDFs?
 
-# Available map types (see http://matplotlib.org/basemap/users/geography.html for details):
+## Available map types (see http://matplotlib.org/basemap/users/geography.html for details):
 # 0 - continents and oceans white, just borders
 # 3 - filled oceans and continents
 # 4 - NASA Bluemarble

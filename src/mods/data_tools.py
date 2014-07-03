@@ -14,8 +14,9 @@ IDENT_MAIN_BWD = "grid_time"
 IDENT_NEST_FWD = "grid_conc_nest"
 IDENT_MAIN_FWD = "grid_conc"
 
-ERR = "[ERROR]"
-INFO = " [INFO]"
+ERR =  "  [ERROR]"
+INFO = "   [INFO]"
+WRN =  "[WARNING]"
 
 def laod_receptors(path_to_receptors):
     """
@@ -43,7 +44,7 @@ def laod_receptors(path_to_receptors):
     return receptors 
         
 
-def load_data(FLEXPART_output_dir, reverse=False):
+def load_data(FLEXPART_output_dir, species=1, reverse=False):
     """
     loads data - both concentration data and header data for main (and nested domains, where applicable)
     """
@@ -54,9 +55,13 @@ def load_data(FLEXPART_output_dir, reverse=False):
     nest_domain_files = []
     main_domain_files = []
     
+    domain_files = []
+    headers = []
+    
     #we assume that there are output files for main domain
     header_main = read_header(FLEXPART_output_dir, "header")
     run_type = numpy.sign(header_main["loutstep"][0])
+       
     
     if run_type == 1: #FWD run
        IDENT_MAIN = IDENT_MAIN_FWD 
@@ -66,21 +71,26 @@ def load_data(FLEXPART_output_dir, reverse=False):
        IDENT_NEST = IDENT_NEST_BWD
            
     for file in all_files:
-        if file.startswith(IDENT_MAIN) and not IDENT_NEST in file:
+        if file.startswith(IDENT_MAIN) and (not IDENT_NEST in file) and file.endswith("%3.3d" % species):
             main_domain_files.append(file)
         elif file.startswith(IDENT_NEST):
             nest_domain_files.append(file)
 
     nest_domain_files.sort(reverse=reverse)
     main_domain_files.sort(reverse=reverse)
+
+    domain_files.append(main_domain_files)
+    headers.append(header_main)  
     
     header_nest = None
     
     #read header files
     if (len(nest_domain_files) > 0): #yes, there are outputs for the nested domain
-        header_nest = read_header(FLEXPART_output_dir, "header_nest")    
+        header_nest = read_header(FLEXPART_output_dir, "header_nest")   
+        domain_files.append(nest_domain_files)
+        headers.append(header_nest) 
         
-    return (main_domain_files, nest_domain_files), (header_main, header_nest)
+    return domain_files, headers
 
 def read_header(FP_output_dir, output_type):
     """
@@ -129,7 +139,7 @@ def make_release_dates(simul_end_date, ireleasestart, ireleaseend):
     return rel_start, rel_end
 
 
-def get_min_max_of_data(grids, header, FLEXPART_output_dir, z0, z1, data_factor):
+def get_min_max_of_data(grids, header, FLEXPART_output_dir, z0, z1, data_factor, data_type):
     """
     finds minimal and maximal values of data for better scaling of levels
     """
@@ -140,10 +150,20 @@ def get_min_max_of_data(grids, header, FLEXPART_output_dir, z0, z1, data_factor)
     
     for file in grids:
         grid, wetdep, drydep  = flex_81.readgrid(header, FLEXPART_output_dir+os.sep+file, agec)
+        
+        if data_type == 0:
+            data0 = grid * data_factor
+        elif data_type == 1:
+            data0 = drydep[:,:,:,0,0] * data_factor        
+        elif data_type == 2:
+            data0 = wetdep[:,:,:,0,0] * data_factor        
+        elif data_type == 3:
+            data0 = (drydep[:,:,:,0,0] + wetdep[:,:,:,0,0]) * data_factor
+        
         if z0<z1:
-            data = numpy.sum(grid[:,:,z0:z1+1], axis=2) * data_factor
+            data = numpy.sum(data0[:,:,z0:z1+1], axis=2) 
         else: #just the values from one selected level
-            data = grid[:,:,z0]*data_factor
+            data = data0[:,:,z0]
         if data.max() > max:
             max = data.max()
         if data.min() < min:

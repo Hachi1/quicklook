@@ -6,7 +6,9 @@ from mods import data_tools
 
 #how do we format date
 DATE_FORMATTER = "%Y/%m/%d %H:%M"
-ERR_PREFIX = "\n [ERROR]  "
+ERR =  "  [ERROR]"
+INFO = "   [INFO]"
+WRN =  "[WARNING]"
 
 def print_separator():
     """
@@ -57,7 +59,8 @@ def domain_info_short(header):
     prints brief domain info (temporal and spatil) from header
     """
     print "Header info %s:" % header["ver"]
-    spec_no = len(header["species"])
+    
+    spec_no = header["nspec"]
     print "\nNumber of species:", spec_no
     for i in range(spec_no):
         print i+1,  "".join([x for x in header["species"][i][0]])
@@ -116,7 +119,7 @@ def select_domain(header):
     z1 = int(raw_input("z1 (to): "))
     return lon0, lat0, lon1, lat1, z0, z1
 
-def validate_domain(lon0, lat0, lon1, lat1, z0, z1, header):
+def validate_domain(lon0, lat0, lon1, lat1, header):
     """
     validates if the selected domain is possible - if it is inside the output region
     """
@@ -143,10 +146,17 @@ def validate_domain(lon0, lat0, lon1, lat1, z0, z1, header):
     if lat0 < _lat0 or lat0 > _lat1:
         valid = False
         print ERR_PREFIX+"Lat0 outside plausible region!"          
-    if z1 < z0:
-        valid = False
-        print ERR_PREFIX+"z1 must be not be smaller z0"
+    
         
     return valid
     
+def validate_levels(z0, z1):
+    """
+    validates vertical levels
+    """
+    valid = True #we apriori assume, that the data are valid
+    if z1 < z0:
+        valid = False
+        print ERR_PREFIX+"z1 must be not be smaller z0"
     
+    return valid    

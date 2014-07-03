@@ -20,8 +20,9 @@ DATE_FORMAT_IN = "%Y%m%d%H%M%S"
 
 counter = 0
 
-ERR = "[ERROR]"
-INFO = " [INFO]"
+ERR =  "  [ERROR]"
+INFO = "   [INFO]"
+WRN =  "[WARNING]"
 
 def get_date_from_fname(fname):
     """
@@ -33,7 +34,7 @@ def get_date_from_fname(fname):
     d = dtime.strftime(cf.DATE_FORMAT_OUT)
     return d
 
-def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, lon0, lon1, lat0, lat1, z0, z1, m, x, y, min_d, max_d, receptors, unitlabel, imagedir, title, log_flag=True):
+def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, lon0, lon1, lat0, lat1, z0, z1, m, x, y, min_d, max_d, receptors, unitlabel, imagedir, title, data_type, log_flag=True):
     """
     renders single frame of animation
     """
@@ -44,12 +45,20 @@ def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, l
     agec = 1
     file_path = FLEXPART_output_dir+os.sep+grids[nframe]
     grid, wetdep, drydep = flex_81.readgrid(header, file_path, agec)
-    grid = grid * data_factor
     
+    if data_type == 0:
+        data0 = grid * data_factor
+    elif data_type == 1:
+        data0 = drydep[:,:,:,0,0] * data_factor        
+    elif data_type == 2:
+        data0 = wetdep[:,:,:,0,0] * data_factor        
+    elif data_type == 3:
+        data0 = (drydep[:,:,:,0,0] + wetdep[:,:,:,0,0]) * data_factor
+        
     if z0<z1: #we eant integral value over more vetical levels
-        data = numpy.sum(grid[:,:,z0:z1+1], axis=2).transpose()
+        data = numpy.sum(data0[:,:,z0:z1+1], axis=2).transpose()
     else: #just the values from one selected level
-        data = grid[:,:,z0].transpose()
+        data = data0[:,:,z0].transpose()
                 
     if cf.LOG_FLAG: #log scale
         if cf.LOG_LEVELS_MAX == - 999:
@@ -155,16 +164,16 @@ def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, l
 
 
     if cf.PDFS_FLAG: #pdfs will be also saved
-        plt.savefig(imagedir+os.sep+domain+"_"+str(int(z0))+"-"+str(int(z1))+"_frame_%03d.pdf" % nframe)
+        plt.savefig(imagedir+os.sep+domain+"_"+str(int(z0))+"-"+str(int(z1))+"_frame_%03d%s.pdf" % (nframe, cf.FILE_NAMES[data_type]))
   
     if cf.JPGS_FLAG: #produce JPGs?
-        plt.savefig(imagedir+os.sep+domain+"_"+str(int(z0))+"-"+str(int(z1))+"_frame_%03d.jpg" % nframe)
+        plt.savefig(imagedir+os.sep+domain+"_"+str(int(z0))+"-"+str(int(z1))+"_frame_%03d%s.jpg" % (nframe, cf.FILE_NAMES[data_type]))
         
     if cf.PNGS_FLAG: #produce PNGs?    
-        plt.savefig(imagedir+os.sep+domain+"_"+str(int(z0))+"-"+str(int(z1))+"_frame_%03d.png" % nframe)
+        plt.savefig(imagedir+os.sep+domain+"_"+str(int(z0))+"-"+str(int(z1))+"_frame_%03d%s.png" % (nframe, cf.FILE_NAMES[data_type]))
 
 
-def make_animation(header, grids, domain, data_factor, FLEXPART_output_dir, lon0, lon1, lat0, lat1, z0, z1, IMAGEDIR, receptors, filename, unitlabel, title, projection):
+def make_animation(header, grids, domain, data_factor, FLEXPART_output_dir, lon0, lon1, lat0, lat1, z0, z1, IMAGEDIR, receptors, filename, unitlabel, title, projection,data_type):
     """
     makes animation from an array of grids
     """
@@ -229,7 +238,7 @@ def make_animation(header, grids, domain, data_factor, FLEXPART_output_dir, lon0
     x, y = m(lons, lats)
          
     #finding minimum and maximum values in the data to be able to make reasonale levels same for all frames
-    min_d, max_d = data_tools.get_min_max_of_data(grids, header, FLEXPART_output_dir, z0, z1, data_factor)   
+    min_d, max_d = data_tools.get_min_max_of_data(grids, header, FLEXPART_output_dir, z0, z1, data_factor, data_type)   
          
     a = matplotlib.animation.FuncAnimation(fig, 
                                    get_frame, 
@@ -254,7 +263,8 @@ def make_animation(header, grids, domain, data_factor, FLEXPART_output_dir, lon0
                                           receptors,
                                           unitlabel,
                                           IMAGEDIR,
-                                          title),
+                                          title,
+                                          data_type),
                                     repeat=False)
     
 

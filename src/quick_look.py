@@ -12,6 +12,8 @@ from mods import interactive
 from mods import data_tools
 from mods import plotters
 
+import config as cf
+
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -23,8 +25,9 @@ __updated__ = '2014-06-2'
 DEBUG = 0
 TESTRUN = 0
 PROFILE = 0
-ERR = "[ERROR]"
-INFO = " [INFO]"
+ERR =  "  [ERROR]"
+INFO = "   [INFO]"
+WRN =  "[WARNING]"
 DOMAINS = ["mother", "nested"]
 
 def explore(headers):
@@ -65,7 +68,7 @@ def main(argv=None):
         
         parser.add_option("-d", "--domain", type="float", nargs=4, dest="domain", help="Coordinates of the domain: ll_lon, ll_lat, ur_lon, ur_lat")
         parser.add_option("-m", "--max_lat_lon",  action="store_true", dest="max_lat_lon", help="Takes maximum available lat-lon domain (overrides -d)")
-        parser.add_option("-l", "--levels", type="float", nargs=2, dest="levels", help="Sets vertical level range: z0, z1 (z0,z1 >= 0, z0=z1 to select just one level)")
+        parser.add_option("-l", "--levels", type="float", nargs=2, dest="levels", help="Sets vertical level range for conc/res. times: z0, z1 (z0,z1 >= 0, z0=z1 to select just one level)")
         parser.add_option("-t", "--type", dest="type", help="Flexpart output type [mother|nested]")
         
         parser.add_option("-o", "--output", dest="output", help="Images output directory")
@@ -77,6 +80,10 @@ def main(argv=None):
         parser.add_option("-x", "--title",  dest="title", help="Title of images")
         parser.add_option("-z", "--projection",  dest="projection", help="Map projection [cylindrical:cyl (default), Marcator:merc]")
         parser.add_option("-s", "--species",  dest="species", help="species to show (default is the first one - 1)")
+        
+        parser.add_option("--conc",  action="store_true", dest="conc", help="Show concentrations/residence times (default)")
+        parser.add_option("--drydepo",   action="store_true", dest="drydepo", help="Show dry depo (can be combined with --wetdepo)")
+        parser.add_option("--wetdepo",  action="store_true", dest="wetdepo", help="Show wet depo (can be combined with --drydepo)")
         
         #parser.add_option("-v", "--verbose", action="store_false", dest="verbose", help="set verbose mode", default=True)
         
@@ -91,6 +98,19 @@ def main(argv=None):
             sys.exit(2)
         
         
+        data_type = 0 #default: conc/resident times = 0
+        
+        if opts.drydepo:
+            data_type = 1 #dry depo
+            print INFO+" - Dry depositon will be shown."
+        if opts.wetdepo:
+            data_type = 2 #wet depo
+            print INFO+" - Wet deposition will be shown."
+        if opts.drydepo and opts.wetdepo:
+            data_type = 3 #sum of all deposition
+            print INFO+" - Sum of dry and wet deposition will be shown."
+            
+        
         
         if opts.reverse:
             print INFO+" - Files will be processed reversely"
@@ -104,7 +124,8 @@ def main(argv=None):
                print ERR+" - Species identificator must be >= 1" 
                sys.exit(2)
         else:
-            species = 1 #default species            
+            species = 1 #default species    
+            print WRN+" - Species not specified, taking default values -s 1"        
              
         
         if opts.input:
@@ -116,14 +137,21 @@ def main(argv=None):
         else:
             print ERR+" - Flexpart output directory not set, please run '%s -h'" % (program_name)
             sys.exit(2)
-  
-        species_name = "".join([x for x in headers[DOMAINS.index(opts.type)]["species"][species][0]]) 
-        print INFO+" - Species: "+str(species)+" "+species_name   
-        
-        if not opts.type in DOMAINS:
+
+        if opts.type in DOMAINS:
+            if len(headers) > DOMAINS.index(opts.type)+1:
+                print ERR+" - Domain %s not available!" % opts.type 
+
+        else:
             print ERR+" - Output domain (-t mother|nested) not set, please run '%s -h'" % (program_name)     
             explore(headers)
-            sys.exit(2)
+            sys.exit(2)  
+        
+  
+        species_name = "".join([x for x in headers[DOMAINS.index(opts.type)]["species"][species-1][0]]) 
+        print INFO+" - Species: "+str(species)+" "+species_name   
+        
+
         
         try:
             headers[DOMAINS.index(opts.type)]
@@ -136,22 +164,36 @@ def main(argv=None):
             opts.domain = max_d
             print INFO+" - Taking maximum available domain:", max_d
         
-        if opts.domain and opts.levels:
+        
+        #validation of domain
+        if opts.domain:
             lon0 = opts.domain[0]
             lat0 = opts.domain[1]
             lon1 = opts.domain[2]
             lat1 = opts.domain[3]
-            z0 = opts.levels[0]
-            z1 = opts.levels[1]
-            valid = interactive.validate_domain(lon0, lat0, lon1, lat1, z0, z1, headers[DOMAINS.index(opts.type)])  
+            valid = interactive.validate_domain(lon0, lat0, lon1, lat1, headers[DOMAINS.index(opts.type)])  
             if not valid:
                 print ERR+" - Domain not valid!"
                 sys.exit(2)
         else:
-            print ERR+" - Domain or vertical levels not specified, please run '%s -h'" % (program_name)
+            print ERR+" - Domain or not specified, please run '%s -h'" % (program_name)
             explore(headers)
             sys.exit(2)
-            
+   
+        #validation of levels when concentration/res. times are plotted
+        z0, z1 = 0, 0
+        if data_type==0:
+            if opts.levels:
+                z0 = opts.levels[0]
+                z1 = opts.levels[1]
+                valid = interactive.validate_levels(z0, z1)  
+                if not valid:
+                    print ERR+" - Levels not valid!"
+                    sys.exit(2)
+            else:
+                print WRN+" - Levels not specified, taking default values -l 0 0"
+                   
+                
             
         if opts.receptors:
             receptors = data_tools.laod_receptors(opts.receptors)
@@ -173,7 +215,7 @@ def main(argv=None):
         if opts.filename:
             filename = opts.filename
         else:
-            filename = "anim_%s.gif" % opts.type
+            filename = "anim_%s%s.gif" % (opts.type, cf.FILE_NAMES[data_type])
             print INFO+" - No filename provided, setting to %s" % filename
             
 
@@ -227,7 +269,8 @@ def main(argv=None):
                             filename,
                             unitlabel,
                             title,
-                            projection)
+                            projection,
+                            data_type)
             
         # MAIN BODY #
     """     
