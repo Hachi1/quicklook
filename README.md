@@ -1,5 +1,6 @@
 # News #
 
+* Quicklook now supports **multiple species**!
 * **pcolormesh** and **imshow** added, look into *config.py*!
 * **NASA Bluemarble**, **shaded relief** and **etopo** map backgrounds added, look into *config.py*!
 * Test data for forward and backward runs added, see **Test data and examples** Section!
