@@ -215,7 +215,7 @@ If you need to multiply the data by a *Factor* before plotting, use `-f <Factor>
 
 Particularly for backward runs is useful flag `-q`, which forces the output files to be processed in a backward manner.
 
-To produce PDFs instead of default PNGs, use `-p` flag.
+To select which species to plot, use `-s <species number>`.
 
 To change the map projection from default cylindrical to Mercator, use `-z merc`. **Warning:** Using of Mercator projection for a domain containing poles will raise an error.
 
@@ -225,15 +225,13 @@ Generally, virtually everything can be changed by modifying the source code of Q
 
 ## Test data and examples ##
 
-Test data for backward run of FLEXPART are available in `test_data/bwd_run` in the root of the repository. You can run the example by executing the following command from `src` directory:
+Test data for backward run of FLEXPART are available in `test_data` in the root of the repository. There are test data for both forward and backward runs. Forward run includes multiple species. For example, you can run the backward example by executing the following command from `src` directory:
 
 ```bash
 $ python quick_look.py -i ../test_data/bwd_run -t mother -m -l 0 4 -r ../test_data/receprors.txt -x "Backward run from JPX38" -u "(mBq/GBq)" -o ../samples/
 ```
 
 An animation in `samples` should be produced.
-
-Data for a forward run will follow soon.
 
 ## TO DOs ##
 
