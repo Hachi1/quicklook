@@ -72,12 +72,11 @@ def main(argv=None):
         parser.add_option("-r", "--receptors", dest="receptors", help="File with receptors")
         parser.add_option("-f", "--datafactor", dest="datafactor", help="Factor to multiply the data with")
         parser.add_option("-u", "--unitlabel", dest="unitlabel", help="String containing units of visualized quantity")
-        #parser.add_option("-a", "--animation",  action="store_true", dest="animation", help="Creates animated GIF")
         parser.add_option("-n", "--filename", dest="filename", help="Filename of resulting GIF")
-        parser.add_option("-p", "--pdf",  action="store_true", dest="pdf", help="Creates PDFs instead of PNGs of single frames (slower)")
         parser.add_option("-q", "--reverse",  action="store_true", dest="reverse", help="Files are processes in reverse order")
         parser.add_option("-x", "--title",  dest="title", help="Title of images")
         parser.add_option("-z", "--projection",  dest="projection", help="Map projection [cylindrical:cyl (default), Marcator:merc]")
+        parser.add_option("-s", "--species",  dest="species", help="species to show (default is the first one - 1)")
         
         #parser.add_option("-v", "--verbose", action="store_false", dest="verbose", help="set verbose mode", default=True)
         
@@ -98,21 +97,38 @@ def main(argv=None):
             reverse = True
         else:
             reverse = False            
+
+        if opts.species:
+            species = int(opts.species)
+            if species < 1:
+               print ERR+" - Species identificator must be >= 1" 
+               sys.exit(2)
+        else:
+            species = 1 #default species            
+             
         
         if opts.input:
             try:
-                
-                grids, headers = data_tools.load_data(opts.input, reverse)
+                grids, headers = data_tools.load_data(opts.input, species, reverse)
             except:
-                print ERR+" - Can not open Flexpart output data!"
+                print ERR+" - Can not open FLEXPART output data!"
                 sys.exit(2)
         else:
-            print ERR+" Flexpart output directory not set, please run '%s -h'" % (program_name)
+            print ERR+" - Flexpart output directory not set, please run '%s -h'" % (program_name)
             sys.exit(2)
+  
+        species_name = "".join([x for x in headers[DOMAINS.index(opts.type)]["species"][species][0]]) 
+        print INFO+" - Species: "+str(species)+" "+species_name   
         
         if not opts.type in DOMAINS:
             print ERR+" - Output domain (-t mother|nested) not set, please run '%s -h'" % (program_name)     
             explore(headers)
+            sys.exit(2)
+        
+        try:
+            headers[DOMAINS.index(opts.type)]
+        except:
+            print ERR+" - Domain '%s' not available!" % opts.type
             sys.exit(2)
         
         if opts.max_lat_lon:
@@ -191,20 +207,9 @@ def main(argv=None):
             sys.exit(1)
         print INFO+" - %s projection will be used" % projs[projection]            
         
+                   
         
         
-        if opts.pdf:
-            print INFO+" - PDFs will be created"
-            print INFO+" - PNGs will NOT be created"
-            pdf = opts.pdf
-        else:
-            print INFO+" - PDFs will NOT be created"
-            print INFO+" - PNGs will be created"
-            pdf = False             
-        
-            
-
-            
             
         plotters.make_animation(headers[DOMAINS.index(opts.type)], 
                             grids[DOMAINS.index(opts.type)],
@@ -221,7 +226,6 @@ def main(argv=None):
                             receptors,
                             filename,
                             unitlabel,
-                            pdf,
                             title,
                             projection)
             

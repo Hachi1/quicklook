@@ -57,25 +57,29 @@ def domain_info_short(header):
     prints brief domain info (temporal and spatil) from header
     """
     print "Header info %s:" % header["ver"]
+    spec_no = len(header["species"])
+    print "\nNumber of species:", spec_no
+    for i in range(spec_no):
+        print i+1,  "".join([x for x in header["species"][i][0]])
     #spatial domain
-    print "Domain:"
+    print "\nDomain:"
     print "    Lon: %4.3f - %4.3f deg, step %4.3f deg" % (header["outlon0"][0], 
                                                                 header["outlon0"][0]+(header["numxgrid"][0]-1)*header["dxout"][0], 
                                                                 header["dxout"][0])
     print "    Lat:  %4.3f - %4.3f deg, step %4.3f deg" % (header["outlat0"][0], 
                                                                 header["outlat0"][0]+(header["numygrid"][0]-1)*header["dyout"][0], 
                                                                 header["dyout"][0])
-    print "Output levels:"
+    print "\nOutput levels:"
     for i, lev in enumerate(header["outheight"]):
         print "    ", i, str(lev), "m"
 
     #temporal domain
-    print "Run type:"
+    print "\nRun type:"
     if header["loutstep"][0] < 0:
         print "    Backward run"
     else:
         print "    Forward run"
-    print "Output step:"
+    print "\nOutput step:"
     print "    "+str(header["loutstep"][0])+" sec (%3.2f hours)" % (header["loutstep"][0] / 3600.)
     
     ibdate = header["ibdate"][0]

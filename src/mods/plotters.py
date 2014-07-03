@@ -33,7 +33,7 @@ def get_date_from_fname(fname):
     d = dtime.strftime(cf.DATE_FORMAT_OUT)
     return d
 
-def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, lon0, lon1, lat0, lat1, z0, z1, m, x, y, min_d, max_d, receptors, unitlabel, pdf, imagedir, title, log_flag=True):
+def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, lon0, lon1, lat0, lat1, z0, z1, m, x, y, min_d, max_d, receptors, unitlabel, imagedir, title, log_flag=True):
     """
     renders single frame of animation
     """
@@ -129,6 +129,16 @@ def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, l
     #m.drawstates()
     m.drawcountries()
     
+    if cf.MAP_TYPE == 3:
+        m.drawmapboundary(fill_color='aqua')
+        m.fillcontinents(color='coral',lake_color='aqua')
+    elif cf.MAP_TYPE == 4:
+        m.bluemarble()
+    elif cf.MAP_TYPE == 5:
+        m.shadedrelief()
+    elif cf.MAP_TYPE == 6:
+        m.etopo()
+    
     #plotting of receptors:
     for receptor in receptors:
         #r_lon = receptor[0]
@@ -144,14 +154,17 @@ def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, l
 
 
 
-    if pdf: #pdfs will be also saved
+    if cf.PDFS_FLAG: #pdfs will be also saved
         plt.savefig(imagedir+os.sep+domain+"_"+str(int(z0))+"-"+str(int(z1))+"_frame_%03d.pdf" % nframe)
   
-    if cf.PNGS_FLAG: #produce PNGs?
+    if cf.JPGS_FLAG: #produce JPGs?
+        plt.savefig(imagedir+os.sep+domain+"_"+str(int(z0))+"-"+str(int(z1))+"_frame_%03d.jpg" % nframe)
+        
+    if cf.PNGS_FLAG: #produce PNGs?    
         plt.savefig(imagedir+os.sep+domain+"_"+str(int(z0))+"-"+str(int(z1))+"_frame_%03d.png" % nframe)
 
 
-def make_animation(header, grids, domain, data_factor, FLEXPART_output_dir, lon0, lon1, lat0, lat1, z0, z1, IMAGEDIR, receptors, filename, unitlabel, pdf, title, projection):
+def make_animation(header, grids, domain, data_factor, FLEXPART_output_dir, lon0, lon1, lat0, lat1, z0, z1, IMAGEDIR, receptors, filename, unitlabel, title, projection):
     """
     makes animation from an array of grids
     """
@@ -207,6 +220,7 @@ def make_animation(header, grids, domain, data_factor, FLEXPART_output_dir, lon0
                 resolution=cf.BASEMAP_RESOLUTION, area_thresh=cf.BASEMAP_AREA_THR)    
          
     
+
     #this is better I think than the originla script
     lons0 = numpy.linspace(outlon0, outlon0+(numxgrid-1)*dxout, numxgrid)
     lats0 = numpy.linspace(outlat0, outlat0+(numygrid-1)*dyout, numygrid)
@@ -239,7 +253,6 @@ def make_animation(header, grids, domain, data_factor, FLEXPART_output_dir, lon0
                                           max_d,
                                           receptors,
                                           unitlabel,
-                                          pdf,
                                           IMAGEDIR,
                                           title),
                                     repeat=False)

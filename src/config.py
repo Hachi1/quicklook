@@ -35,7 +35,17 @@ TEXT_OFFSET = 0.2 # text offset for labeling POIs in degrees, applied in both la
 POI_MARKER = 'bo' # marker and color of POI following matplotlib conventions
 POI_MARKER_SIZE = 6 # size of POI MARKER
 
-PNGS_FLAG = True # do we want to produce PNGs?
+PNGS_FLAG = False # do we want to produce PNGs?
+JPGS_FLAG = True # do we want to produce JPGs?
+PDFS_FLAG = False # do we want to produce PDFs?
 
-BASEMAP_RESOLUTION = 'h' # resolution of map:  'c' (crude - fast), 'l' (low), 'i' (intermediate), 'h' (high), 'f' (full - slow) 
+# Available map types (see http://matplotlib.org/basemap/users/geography.html for details):
+# 0 - continents and oceans white, just borders
+# 3 - filled oceans and continents
+# 4 - NASA Bluemarble
+# 5 - shaded relief
+# 6 - etopo relief
+MAP_TYPE = 0
+
+BASEMAP_RESOLUTION = 'i' # resolution of map:  'c' (crude - fast), 'l' (low), 'i' (intermediate), 'h' (high), 'f' (full - slow) 
 BASEMAP_AREA_THR = 10000 # basemap area threshold
