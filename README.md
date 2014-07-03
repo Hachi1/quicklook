@@ -17,7 +17,7 @@ QuickLook is a free command-line tool for quick plotting of [FLEXPART](http://ww
 
 ![mother_bw_small_optim.gif](https://bitbucket.org/repo/dAb4ay/images/2168236771-mother_bw_small_optim.gif)
 
-![small_optim.gif](https://bitbucket.org/repo/dAb4ay/images/4171076865-small_optim.gif)
+![conc+depo_small_optim.gif](https://bitbucket.org/repo/dAb4ay/images/1711578702-conc%2Bdepo_small_optim.gif)
 
 It is written in pure Python 2.7, so no compilation nor installation is required. You just need to fulfill the prerequisites and install all libraries needed, see Section **Prerequisites**. After obtaining OuickLook from this repository, you can easily modify it according to your needs. The easiest way how to get QuickLook is to clone the git repository:
 
