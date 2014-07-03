@@ -1,5 +1,6 @@
 # News #
 
+* Wet and dry (or their sum) now can be shown!
 * Quicklook now supports **multiple species**!
 * New possibilities of plotting gridded data added (**pcolormesh** and **imshow**), look into *config.py*!
 * Options for **NASA Bluemarble**, **shaded relief** and **etopo** map backgrounds added, look into *config.py*!
@@ -92,6 +93,9 @@ Options:
                         Marcator:merc]
   -s SPECIES, --species=SPECIES
                         species to show (default is the first one - 1)
+  --conc                Show concentrations/residence times (default)
+  --drydepo             Show dry depo (can be combined with --wetdepo)
+  --wetdepo             Show wet depo (can be combined with --drydepo)
 ```
 
 ### Explore FLEXPART outputs ###
@@ -221,9 +225,11 @@ To select which species to plot, use `-s <species number>`.
 
 To change the map projection from default cylindrical to Mercator, use `-z merc`. **Warning:** Using of Mercator projection for a domain containing poles will raise an error.
 
+To show dry/wet deposition instead of concentration/residence times, use `--drydepo` or `--wetdepo`. To show their sum use both, i.e. `--drydepo --wetdepo`.
+
 ## Configuring and modifying QuickLook ##
 
-Generally, virtually everything can be changed by modifying the source code of QuickLook. However, the goal is to provide a full control over the appearance of plots via a configuration file. As a stub for this feature, there is a file *config.py*, where you can configure some properties. I hope that the structure of the file is quite self-explanatory.
+Generally, virtually everything can be changed by modifying the source code of QuickLook. However, the goal is to provide a full control over the appearance of plots via a configuration file *config.py*, where you can configure some properties. I hope that the structure of the file is quite self-explanatory.
 
 ## Test data and examples ##
 
