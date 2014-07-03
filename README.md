@@ -246,5 +246,6 @@ An animation in `samples` should be produced.
 * Prepare unit tests to maintain consistency in future development:)
 * Enable users to easily access more parameters via *config.py* file
 * Include *flex-diff* tool for plotting differences between two FLEXPART runs
+* Improve ERROR and WARNING messages
 
 If you have any special requirement, please let me know via [issues reporting system](https://bitbucket.org/radekhofman/quicklook/issues?status=new&status=open):)
