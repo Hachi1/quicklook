@@ -167,7 +167,7 @@ We see that we have a backward run of FLEXPART with a global mother and a smalle
 Now, when we know what we have, we can plot the results. We run:
 
 ```bash
-$ python quic_look.py -i /home/radek/run_1/Output -t mother -m -l 0 4
+$ python quic_look.py -i /home/radek/run_1/Output -t mother -m -l 0 4 -s 1
 ```
 
 This command says:
@@ -176,9 +176,11 @@ This command says:
 * Use mother domain (`-t mother`)
 * Take maximum available lon-lat range (`-m`)
 * Show integrated values over all levels 0-4 (`-l 0 4`)
+* Take output for species no. 1
 
 The output should be as follows:
 ```bash
+ [INFO] - Species: 1 TRACER   
  [INFO] - Taking maximum available domain: (-179.0, -90.0, 179.0, 89.0)
  [INFO] - No output path provided, results will be saved to /home/radek/run_1/Output
  [INFO] - No filename provided, setting to anim_mother.gif
