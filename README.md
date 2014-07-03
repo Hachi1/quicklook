@@ -80,13 +80,14 @@ Options:
                         String containing units of visualized quantity
   -n FILENAME, --filename=FILENAME
                         Filename of resulting GIF
-  -p, --pdf             Creates PDFs instead of PNGs of single frames (slower)
   -q, --reverse         Files are processes in reverse order
   -x TITLE, --title=TITLE
                         Title of images
   -z PROJECTION, --projection=PROJECTION
                         Map projection [cylindrical:cyl (default),
                         Marcator:merc]
+  -s SPECIES, --species=SPECIES
+                        species to show (default is the first one - 1)
 ```
 
 ### Explore FLEXPART outputs ###
