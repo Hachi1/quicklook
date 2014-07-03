@@ -12,7 +12,9 @@
 
 QuickLook is a free command-line tool for quick plotting of [FLEXPART](http://www.flexpart.eu) outputs. Like the following ones:)
 
-![mother small optim.gif](https://bitbucket.org/repo/dAb4ay/images/3717279495-mother%20small%20optim.gif)
+![mother_bluemarble_small_optim.gif](https://bitbucket.org/repo/dAb4ay/images/2034626945-mother_bluemarble_small_optim.gif)
+
+![mother_bw_small_optim.gif](https://bitbucket.org/repo/dAb4ay/images/2168236771-mother_bw_small_optim.gif)
 
 ![small_optim.gif](https://bitbucket.org/repo/dAb4ay/images/4171076865-small_optim.gif)
 
