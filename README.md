@@ -107,17 +107,24 @@ You should get something like:
 ==================================================================
 DOMAIN TYPE: mother
 Header info FLEXPART V9.0:
+
+Number of species: 1
+1 TRACER    
+
 Domain:
     Lon: -179.000 - 179.000 deg, step 1.000 deg
     Lat:  -90.000 - 89.000 deg, step 1.000 deg
+
 Output levels:
      0 100.0 m
      1 500.0 m
      2 1000.0 m
      3 1500.0 m
      4 2000.0 m
+
 Run type:
     Backward run
+
 Output step:
     -10800 sec (-3.00 hours)
 Release dates:
@@ -125,23 +132,31 @@ Release dates:
 ==================================================================
 ==================================================================
 DOMAIN TYPE: nested
-Header info FLEXPART V9.0:
+Header info FLEXPART V8.2:
+
+Number of species: 1
+1 TRACER    
+
 Domain:
     Lon: 110.000 - 170.000 deg, step 0.250 deg
     Lat:  15.000 - 60.000 deg, step 0.200 deg
+
 Output levels:
      0 100.0 m
      1 500.0 m
      2 1000.0 m
      3 1500.0 m
      4 2000.0 m
+
 Run type:
     Backward run
+
 Output step:
     -10800 sec (-3.00 hours)
 Release dates:
     From 2013/04/07 18:54 to 2013/04/08 06:54
 ==================================================================
+
 ```
 
 We see that we have a backward run of FLEXPART with a global mother and a smaller nested domain. The output time step is 3 hours and we have 5 vertical levels 0-4.
