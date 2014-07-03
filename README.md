@@ -2,7 +2,7 @@
 
 * Quicklook now supports **multiple species**!
 * New possibilities of plotting gridded data added (**pcolormesh** and **imshow**), look into *config.py*!
-* **NASA Bluemarble**, **shaded relief** and **etopo** map backgrounds added, look into *config.py*!
+* Options for **NASA Bluemarble**, **shaded relief** and **etopo** map backgrounds added, look into *config.py*!
 * Test data for forward and backward runs added, see **Test data and examples** Section!
 
 
