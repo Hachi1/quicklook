@@ -1,6 +1,6 @@
 # News #
 
-* Wet and dry (or their sum) now can be shown!
+* Wet and dry *depositions* (or their sum) now can be shown!
 * Quicklook now supports **multiple species**!
 * New possibilities of plotting gridded data added (**pcolormesh** and **imshow**), look into *config.py*!
 * Options for **NASA Bluemarble**, **shaded relief** and **etopo** map backgrounds added, look into *config.py*!
