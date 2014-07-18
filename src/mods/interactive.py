@@ -60,11 +60,16 @@ def domain_info_short(header):
     """
     print "Header info %s:" % header["ver"]
     
+    
     spec_no = header["nspec"]
     print "\nNumber of species:", spec_no
     for i in range(spec_no):
         print i+1,  "".join([x for x in header["species"][i][0]])
     #spatial domain
+
+    print "\nNumber of ageclasses:", header["nageclass"]
+    print "Ageclasses:", header["lage"]
+    
     print "\nDomain:"
     print "    Lon: %4.3f - %4.3f deg, step %4.3f deg" % (header["outlon0"][0], 
                                                                 header["outlon0"][0]+(header["numxgrid"][0]-1)*header["dxout"][0], 

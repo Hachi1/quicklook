@@ -80,6 +80,7 @@ def main(argv=None):
         parser.add_option("-x", "--title",  dest="title", help="Title of images")
         parser.add_option("-z", "--projection",  dest="projection", help="Map projection [cylindrical:cyl (default), Marcator:merc]")
         parser.add_option("-s", "--species",  dest="species", help="species to show (default is the first one - 1)")
+        parser.add_option("-a", "--agec", type="float", nargs=2, dest="agec", help="Sets range for ageclasses (a1,a2 >= 1, a1=a2 to select just one ageclass). Default: a1=a2=1")
         
         parser.add_option("--conc",  action="store_true", dest="conc", help="Show concentrations/residence times (default)")
         parser.add_option("--drydepo",   action="store_true", dest="drydepo", help="Show dry depo (can be combined with --wetdepo)")
@@ -250,7 +251,17 @@ def main(argv=None):
         print INFO+" - %s projection will be used" % projs[projection]            
         
                    
-        
+        if opts.agec:
+            a1=int(opts.agec[0])
+            a2=int(opts.agec[1])
+            if a2<a1:
+                print ERR+" - Wrong age class range!"
+                sys.exit(1)
+            else:
+                print INFO+" - Using age class range %d - %d" % (a1, a2)
+        else:
+            a1, a2 = 1, 1
+            print INFO+" - Setting default age class range %d - %d" % (a1, a2)
         
             
         plotters.make_animation(headers[DOMAINS.index(opts.type)], 
@@ -262,15 +273,15 @@ def main(argv=None):
                             lon1, 
                             lat0, 
                             lat1, 
-                            z0, 
-                            z1,
+                            z0,z1, 
                             output,
                             receptors,
                             filename,
                             unitlabel,
                             title,
                             projection,
-                            data_type)
+                            data_type,
+                            a1,a2)
             
         # MAIN BODY #
     """     

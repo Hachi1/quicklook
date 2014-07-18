@@ -34,7 +34,20 @@ def get_date_from_fname(fname):
     d = dtime.strftime(cf.DATE_FORMAT_OUT)
     return d
 
-def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, lon0, lon1, lat0, lat1, z0, z1, m, x, y, min_d, max_d, receptors, unitlabel, imagedir, title, data_type, log_flag=True):
+def get_frame(nframe, 
+              header, grids, 
+              data_factor, 
+              domain, 
+              FLEXPART_output_dir, 
+              lon0, lon1, lat0, lat1,
+              z0, z1, 
+              m, x, y, 
+              min_d, max_d, 
+              receptors, 
+              unitlabel, imagedir, title, 
+              data_type, 
+              a1, a2, 
+              log_flag=True):
     """
     renders single frame of animation
     """
@@ -42,18 +55,29 @@ def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, l
     
     print INFO+" -- Processing file %d" % nframe, grids[nframe]
     plt.cla()
-    agec = 1
-    file_path = FLEXPART_output_dir+os.sep+grids[nframe]
-    grid, wetdep, drydep = flex_81.readgrid(header, file_path, agec)
     
-    if data_type == 0:
-        data0 = grid * data_factor
-    elif data_type == 1:
-        data0 = drydep[:,:,:,0,0] * data_factor        
-    elif data_type == 2:
-        data0 = wetdep[:,:,:,0,0] * data_factor        
-    elif data_type == 3:
-        data0 = (drydep[:,:,:,0,0] + wetdep[:,:,:,0,0]) * data_factor
+    file_path = FLEXPART_output_dir+os.sep+grids[nframe]
+    
+    data0 = numpy.zeros(( int(header["numxgrid"][0]),
+                          int(header["numygrid"][0]),
+                          int(header["numzgrid"][0])  ))
+    
+    #loop over age classes
+    for agec in range(a1,a2+1):
+        grid, wetdep, drydep = flex_81.readgrid(header, file_path, agec)
+        
+        #From flex_81: - species are in sepaate files, why we have here also filds for them?
+        #wetdep=zeros([int(header["numxgrid"][0]),int(header["numygrid"][0]),int(1),int(header["nageclass"][0]),int(header['nspec'])])
+        #drydep=zeros([int(header["numxgrid"][0]),int(header["numygrid"][0]),int(1),int(header["nageclass"][0]),int(header['nspec'])])
+        
+        if data_type == 0:
+            data0 += grid * data_factor
+        elif data_type == 1:
+            data0 += drydep[:,:,:,agec-1,0] * data_factor        
+        elif data_type == 2:
+            data0 += wetdep[:,:,:,agec-1,0] * data_factor        
+        elif data_type == 3:
+            data0 += (drydep[:,:,:,agec-1,0] + wetdep[:,:,:,agec-1,0]) * data_factor
         
     if z0<z1: #we eant integral value over more vetical levels
         data = numpy.sum(data0[:,:,z0:z1+1], axis=2).transpose()
@@ -173,7 +197,20 @@ def get_frame(nframe, header, grids, data_factor, domain, FLEXPART_output_dir, l
         plt.savefig(imagedir+os.sep+domain+"_"+str(int(z0))+"-"+str(int(z1))+"_frame_%03d%s.png" % (nframe, cf.FILE_NAMES[data_type]))
 
 
-def make_animation(header, grids, domain, data_factor, FLEXPART_output_dir, lon0, lon1, lat0, lat1, z0, z1, IMAGEDIR, receptors, filename, unitlabel, title, projection,data_type):
+def make_animation(header, 
+                   grids, 
+                   domain,
+                   data_factor, 
+                   FLEXPART_output_dir, 
+                   lon0, lon1, lat0, lat1, 
+                   z0, z1, 
+                   IMAGEDIR, 
+                   receptors, 
+                   filename, 
+                   unitlabel, title, 
+                   projection,
+                   data_type, 
+                   a1,a2):
     """
     makes animation from an array of grids
     """
@@ -264,7 +301,8 @@ def make_animation(header, grids, domain, data_factor, FLEXPART_output_dir, lon0
                                           unitlabel,
                                           IMAGEDIR,
                                           title,
-                                          data_type),
+                                          data_type,
+                                          a1, a2),
                                     repeat=False)
     
 

@@ -15,8 +15,8 @@ FILE_NAMES = ["",    #suffix for conc/residence times
 FIG_X = 10 # size of figure in x
 FIG_Y =  8 # size of figure in y
 
-MOTHER_MER_STEP = 30.0  # step of meridians for mother domain in degrees
-MOTHER_PAR_STEP = 30.0  # step of meridians for mother domain in degrees
+MOTHER_MER_STEP = 10.0  # step of meridians for mother domain in degrees
+MOTHER_PAR_STEP = 5.0  # step of meridians for mother domain in degrees
 
 NESTED_MER_STEP = 10.0  # step of meridians for mother domain in degrees
 NESTED_PAR_STEP = 10.0  # step of meridians for mother domain in degrees
