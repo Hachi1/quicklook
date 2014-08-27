@@ -1,5 +1,20 @@
+# FLEXPART 9.2 compatibility issue #
+
+To make Quicklook compatible with FLEXPART 9.2 you have to modify the file `flex_81.py` on line 35 where 13 characters of version string are read. The new FLEXPART 9.2 has different length of this version string so you have to firstly find out in the FLEXPART source code its length and then modify lines 35 - 39 correspondingly: 
+```python
+toto=struct.unpack('c'*vs_length,f.read(vs_length))
+    header['ver']=""
+    # print 'test1'
+    for i in range(0,vs_length):
+        header['ver']=header['ver']+toto[i]
+```
+where `vs_length` is the version string length. Hopefully, the length of the version string will be somehow standardized in the future:) Many thanks to Anne Philipp for discovering this issue.
+
+If this does not work or you encounter another error, please do not hesitate to contact me.
+
 # News #
 
+* **Age classes** support added - remains to be tested for dry and wet deposition *
 * Wet and dry **depositions** (or their sum) now can be shown!
 * Quicklook now supports **multiple species**!
 * New possibilities of plotting gridded data added (**pcolormesh** and **imshow**), look into *config.py*!
@@ -7,7 +22,7 @@
 * Test data for forward and backward runs added, see **Test data and examples** Section!
 
 
-# QuickLook #
+# About QuickLook #
 
 ## Introduction ##
 
@@ -45,7 +60,7 @@ For producing GIF animations you also need [ImageMagick](http://www.imagemagick.
 
 Reading of FLEXPART outputs is accomplished via *flex_81.py* module by J. Brioude (NOAA).
 
-## How to use QuickLook? ##
+# How to use QuickLook? #
 
 It is quite easy:) QuickLook is a command-line tool. To display a list of possible options, simply run
 
@@ -141,7 +156,7 @@ Release dates:
 ==================================================================
 ==================================================================
 DOMAIN TYPE: nested
-Header info FLEXPART V8.2:
+Header info FLEXPART V9.0:
 
 Number of species: 1
 1 TRACER    
@@ -241,7 +256,7 @@ $ python quick_look.py -i ../test_data/bwd_run -t mother -m -l 0 4 -r ../test_da
 
 An animation in `samples` should be produced.
 
-## TO DOs ##
+# TO DOs #
 
 * Prepare unit tests to maintain consistency in future development:)
 * Enable users to easily access more parameters via *config.py* file
