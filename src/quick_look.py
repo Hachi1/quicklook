@@ -70,7 +70,8 @@ def main(argv=None):
         parser.add_option("-m", "--max_lat_lon",  action="store_true", dest="max_lat_lon", help="Takes maximum available lat-lon domain (overrides -d)")
         parser.add_option("-l", "--levels", type="float", nargs=2, dest="levels", help="Sets vertical level range for conc/res. times: z0, z1 (z0,z1 >= 0, z0=z1 to select just one level)")
         parser.add_option("-t", "--type", dest="type", help="Flexpart output type [mother|nested]")
-        
+
+        parser.add_option("-g", "--time_integration", type=int, default=1, help="Set time integration: -g 4. Integrate time every 4 outputs (must be multiple of the number of outputs)")       
         parser.add_option("-o", "--output", dest="output", help="Images output directory")
         parser.add_option("-r", "--receptors", dest="receptors", help="File with receptors")
         parser.add_option("-f", "--datafactor", dest="datafactor", help="Factor to multiply the data with")
@@ -262,7 +263,13 @@ def main(argv=None):
         else:
             a1, a2 = 1, 1
             print INFO+" - Setting default age class range %d - %d" % (a1, a2)
+        timeintegration = opts.time_integration
+        is_multiple = (len(grids[DOMAINS.index(opts.type)]) % timeintegration == 0)
         
+        # must be multiple of flexpart outputs
+        if not is_multiple:
+            print ERR+" - time integration is not multiple of the number of flexpart output's (%d)!" % len(grids[DOMAINS.index(opts.type)])
+            sys.exit(2)
             
         plotters.make_animation(headers[DOMAINS.index(opts.type)], 
                             grids[DOMAINS.index(opts.type)],
@@ -281,7 +288,8 @@ def main(argv=None):
                             title,
                             projection,
                             data_type,
-                            a1,a2)
+                            a1,a2,
+                            timeintegration)
             
         # MAIN BODY #
     """     

@@ -47,37 +47,43 @@ def get_frame(nframe,
               unitlabel, imagedir, title, 
               data_type, 
               a1, a2, 
+              timeintegration,
               log_flag=True):
     """
     renders single frame of animation
     """
     global counter
     
-    print INFO+" -- Processing file %d" % nframe, grids[nframe]
+    # it must be multiple of nframe
+    current_frame = nframe * timeintegration
+    
+    print INFO+" -- Processing file %d" % nframe, grids[current_frame]
     plt.cla()
-    
-    file_path = FLEXPART_output_dir+os.sep+grids[nframe]
-    
+
     data0 = numpy.zeros(( int(header["numxgrid"][0]),
-                          int(header["numygrid"][0]),
-                          int(header["numzgrid"][0])  ))
-    
-    #loop over age classes
-    for agec in range(a1,a2+1):
-        grid, wetdep, drydep = flex_81.readgrid(header, file_path, agec)
+                              int(header["numygrid"][0]),
+                              int(header["numzgrid"][0])  ))
+
+    #loop over integrated times
+    for nstep in range(timeintegration):    
+        file_path = FLEXPART_output_dir+os.sep+grids[current_frame + nstep]
         
-        #From flex_81: - species are in sepaate files, why we have here also filds for them?
-        #wetdep=zeros([int(header["numxgrid"][0]),int(header["numygrid"][0]),int(1),int(header["nageclass"][0]),int(header['nspec'])])
-        #drydep=zeros([int(header["numxgrid"][0]),int(header["numygrid"][0]),int(1),int(header["nageclass"][0]),int(header['nspec'])])
-        
-        if data_type == 0:
-            data0 += grid * data_factor
-        elif data_type == 1:
-            data0 += drydep[:,:,:,agec-1,0] * data_factor        
-        elif data_type == 2:
-            data0 += wetdep[:,:,:,agec-1,0] * data_factor        
-        elif data_type == 3:
-            data0 += (drydep[:,:,:,agec-1,0] + wetdep[:,:,:,agec-1,0]) * data_factor
+        #loop over age classes
+        for agec in range(a1,a2+1):
+            grid, wetdep, drydep = flex_81.readgrid(header, file_path, agec)
+            
+            #From flex_81: - species are in sepaate files, why we have here also filds for them?
+            #wetdep=zeros([int(header["numxgrid"][0]),int(header["numygrid"][0]),int(1),int(header["nageclass"][0]),int(header['nspec'])])
+            #drydep=zeros([int(header["numxgrid"][0]),int(header["numygrid"][0]),int(1),int(header["nageclass"][0]),int(header['nspec'])])
+            
+            if data_type == 0:
+                data0 += grid * data_factor
+            elif data_type == 1:
+                data0 += drydep[:,:,:,agec-1,0] * data_factor        
+            elif data_type == 2:
+                data0 += wetdep[:,:,:,agec-1,0] * data_factor        
+            elif data_type == 3:
+                data0 += (drydep[:,:,:,agec-1,0] + wetdep[:,:,:,agec-1,0]) * data_factor
         
     if z0<z1: #we eant integral value over more vetical levels
         data = numpy.sum(data0[:,:,z0:z1+1], axis=2).transpose()
@@ -180,7 +186,7 @@ def get_frame(nframe,
         m.plot(r_lon, r_lat, cf.POI_MARKER, markersize=cf.POI_MARKER_SIZE)
         plt.text(r_lon+cf.TEXT_OFFSET, r_lat+cf.TEXT_OFFSET, receptor[2])
     
-    date_str = get_date_from_fname(grids[nframe])
+    date_str = get_date_from_fname(grids[current_frame])
     
     plt.title(title+" ("+date_str+")")
     counter += 1
@@ -210,7 +216,8 @@ def make_animation(header,
                    unitlabel, title, 
                    projection,
                    data_type, 
-                   a1,a2):
+                   a1,a2,
+                   timeintegration=1):
     """
     makes animation from an array of grids
     """
@@ -276,10 +283,17 @@ def make_animation(header,
          
     #finding minimum and maximum values in the data to be able to make reasonale levels same for all frames
     min_d, max_d = data_tools.get_min_max_of_data(grids, header, FLEXPART_output_dir, z0, z1, data_factor, data_type)   
+    
+    # find how to group grids for tfor time integration
+    is_multiple = len(grids) % timeintegration == 0    
+    if timeintegration > 1 and is_multiple:
+        sample_grids = len(grids) / timeintegration        
+    else:
+        sample_grids = len(grids)    
          
     a = matplotlib.animation.FuncAnimation(fig, 
                                    get_frame, 
-                                   frames=len(grids), 
+                                   frames=sample_grids, 
                                    #blit=True,
                                    fargs=(header, 
                                           grids, 
@@ -302,7 +316,8 @@ def make_animation(header,
                                           IMAGEDIR,
                                           title,
                                           data_type,
-                                          a1, a2),
+                                          a1, a2,
+                                          timeintegration),
                                     repeat=False)
     
 
