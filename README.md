@@ -117,12 +117,12 @@ Options:
 
 To get started, let's explore some FLEXPART outputs. To do so, execute command
 ```bash
-$ python quic_look.py -e <path_to_output>
+$ python quick_look.py -e <path_to_output>
 ```
 where `<path_to_output>` is path to FLEXPART Output directory, e.g.
 
 ```bash
-$ python quic_look.py -e /home/radek/run_1/Output
+$ python quick_look.py -e /home/radek/run_1/Output
 ```
 
 You should get something like:
@@ -190,7 +190,7 @@ We see that we have a backward run of FLEXPART with a global mother and a smalle
 Now, when we know what we have, we can plot the results. We run:
 
 ```bash
-$ python quic_look.py -i /home/radek/run_1/Output -t mother -m -l 0 4 -s 1
+$ python quick_look.py -i /home/radek/run_1/Output -t mother -m -l 0 4 -s 1
 ```
 
 This command says:
