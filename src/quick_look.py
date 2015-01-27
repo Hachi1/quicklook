@@ -204,7 +204,10 @@ def main(argv=None):
             receptors = []
             
         if opts.datafactor:
-            data_factor = opts.datafactor
+            try:
+                data_factor = float(opts.datafactor)
+            except:
+                print ERR+" - Data factor not valid (a float required)"
         else: 
             data_factor = 1.0
             
