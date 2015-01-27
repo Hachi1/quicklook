@@ -1,6 +1,6 @@
 # FLEXPART 9.2 compatibility issue #
 
-To make Quicklook compatible with FLEXPART 9.2 you have to modify the file `flex_81.py` on line 35 where 13 characters of version string are read. The new FLEXPART 9.2 has different length of this version string so you have to firstly find out in the FLEXPART source code its length and then modify lines 35 - 39 correspondingly: 
+Currently, QuickLook is developed and tested with FLEXPART 9.0. To make Quicklook compatible with FLEXPART 9.2 you have to modify the file `flex_81.py` on line 35 where 13 characters of version string are read. The new FLEXPART 9.2 has different length of this version string so you have to firstly find out in the FLEXPART source code its length and then modify lines 35 - 39 correspondingly: 
 ```python
 toto=struct.unpack('c'*vs_length,f.read(vs_length))
     header['ver']=""
@@ -53,7 +53,7 @@ QuickLook is distributed under [GPL 2.0](http://www.gnu.org/licenses/gpl-2.0.htm
 To run QuickLook you need [Python 2.7](https://www.python.org/downloads/) and following libraries:
 
 * [Numpy](http://www.numpy.org/)
-* [Matplotlib](http://matplotlib.org/)
+* [Matplotlib](http://matplotlib.org/) >1.3
 * [Basemap](http://matplotlib.org/basemap/)
 
 For producing GIF animations you also need [ImageMagick](http://www.imagemagick.org/).
