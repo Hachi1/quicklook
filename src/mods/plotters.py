@@ -84,7 +84,10 @@ def get_frame(nframe,
                 data0 += wetdep[:,:,:,agec-1,0] * data_factor        
             elif data_type == 3:
                 data0 += (drydep[:,:,:,agec-1,0] + wetdep[:,:,:,agec-1,0]) * data_factor
-        
+
+
+    #print "CONTROL: ", nframe, data0[data0>0.].min(), data0.max()
+
     if z0<z1: #we eant integral value over more vetical levels
         data = numpy.sum(data0[:,:,z0:z1+1], axis=2).transpose()
     else: #just the values from one selected level
@@ -187,8 +190,9 @@ def get_frame(nframe,
         plt.text(r_lon+cf.TEXT_OFFSET, r_lat+cf.TEXT_OFFSET, receptor[2])
     
     date_str = get_date_from_fname(grids[current_frame])
-    
+
     plt.title(title+" ("+date_str+")")
+
     counter += 1
 
 
@@ -284,7 +288,7 @@ def make_animation(header,
     #finding minimum and maximum values in the data to be able to make reasonale levels same for all frames
     min_d, max_d = data_tools.get_min_max_of_data(grids, header, FLEXPART_output_dir, z0, z1, data_factor, data_type)   
     
-    # find how to group grids for tfor time integration
+    # find how to group grids for time integration
     is_multiple = len(grids) % timeintegration == 0    
     if timeintegration > 1 and is_multiple:
         sample_grids = len(grids) / timeintegration        
