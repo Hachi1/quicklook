@@ -20,7 +20,7 @@ warnings.filterwarnings("ignore")
 __all__ = []
 __version__ = 0.3   
 __date__ = '2014-06-2'
-__updated__ = '2014-06-2'
+__updated__ = '2015-02-02'
 
 DEBUG = 0
 TESTRUN = 0

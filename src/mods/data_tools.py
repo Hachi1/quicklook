@@ -73,7 +73,7 @@ def load_data(FLEXPART_output_dir, species=1, reverse=False):
     for file in all_files:
         if file.startswith(IDENT_MAIN) and (not IDENT_NEST in file) and file.endswith("%3.3d" % species):
             main_domain_files.append(file)
-        elif file.startswith(IDENT_NEST):
+        elif file.startswith(IDENT_NEST) and file.endswith("%3.3d" % species):
             nest_domain_files.append(file)
 
     nest_domain_files.sort(reverse=reverse)
