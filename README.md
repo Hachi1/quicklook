@@ -1,24 +1,24 @@
-# FLEXPART 9.2 compatibility issue #
+#QuickLook versions#
 
-Currently, QuickLook is developed and tested with FLEXPART 9.0. To make Quicklook compatible with FLEXPART 9.2 you have to modify the file `flex_81.py` on line 35 where 13 characters of version string are read. The new FLEXPART 9.2 has different length of this version string so you have to firstly find out in the FLEXPART source code its length and then modify lines 35 - 39 correspondingly: 
-```python
-toto=struct.unpack('c'*vs_length,f.read(vs_length))
-    header['ver']=""
-    # print 'test1'
-    for i in range(0,vs_length):
-        header['ver']=header['ver']+toto[i]
-```
-where `vs_length` is the version string length. Hopefully, the length of the version string will be somehow standardized in the future:) Many thanks to Anne Philipp for discovering this issue.
+* In `master` branch, there is an older version of QuickLook which does not have all features, but it is (somehow) tested. It produces GIFs and needs `imagemagick`. This branch uses `flex_81.py` reading routines by  J. Brioude (NOAA).
+* In `newIO` branch, there is a more developed version of QuickLook with some additional features, like integration over species, integration over height columns etc. This version produces MP4 and needs `ffmpeg` to run. This branch uses reading routines by J. Bukhardt.
+* For both versions it is recommended to have `Matplotlib` version >= 1.3
 
-If this does not work or you encounter another error, please do not hesitate to contact me.
+## QuickLook and FLEXPART versions##
+QuickLook currently supports **FLEXPART up to version 9.0**. Newer versions > 9.0 are not currently supported due to changes in structure in `headers` and `grids`. The main problem is that the length of version string in `header` in versions >9.0 is not fixed as in FLEXPART 9.0 and binary reader can thus read some rubbish instead of data. Hopefully, this will be somehow standardised soon.
 
 # News #
-
-* **Age classes** support added - remains to be tested for dry and wet deposition *
+* Interested in **nuclear bomb tests?** Yes? Maybe you could like this: [http://nuclearmap.org/](http://nuclearmap.org/) - an interactive map of nuclear bomb tests. It is optimized for Chrome browser. Tested also in Firefox and some newer versions of Safari. IE not supported, sorry:)
+* Support of MP4 (branch `newIO`)
+* Some minor improvements according to tickets (branch `newIO`)
+* Integration over vertical columns now added (branch `newIO`)
+* Integration over subset of species (branch `newIO`)
+* Integration over time (branches `master` and `newIO`)
+* **Age classes** support added - remains to be tested for dry and wet deposition
 * Wet and dry **depositions** (or their sum) now can be shown!
 * Quicklook now supports **multiple species**!
-* New possibilities of plotting gridded data added (**pcolormesh** and **imshow**), look into *config.py*!
-* Options for **NASA Bluemarble**, **shaded relief** and **etopo** map backgrounds added, look into *config.py*!
+* New possibilities of plotting gridded data added (**pcolormesh** and **imshow**), look into `config.py`!
+* Options for **NASA Bluemarble**, **shaded relief** and **etopo** map backgrounds added, look into `config.py`!
 * Test data for forward and backward runs added, see **Test data and examples** Section!
 
 
