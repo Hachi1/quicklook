@@ -8,7 +8,6 @@
 QuickLook currently supports **FLEXPART up to version 9.0**. Newer versions > 9.0 are not currently supported due to changes in structure in `headers` and `grids`. The main problem is that the length of version string in `header` in versions >9.0 is not fixed as in FLEXPART 9.0 and binary reader can thus read some rubbish instead of data. Hopefully, this will be somehow standardised soon.
 
 # News #
-* Interested in **nuclear bomb tests?** Yes? Maybe you could like this: [http://nuclearmap.org/](http://nuclearmap.org/) - an interactive map of nuclear bomb tests. It is optimized for Chrome browser. Tested also in Firefox and some newer versions of Safari. IE not supported, sorry:)
 * Support of MP4 (branch `newIO`)
 * Some minor improvements according to tickets (branch `newIO`)
 * Integration over vertical columns now added (branch `newIO`)
