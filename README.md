@@ -86,8 +86,8 @@ Options:
                         ur_lat
   -m, --max_lat_lon     Takes maximum available lat-lon domain (overrides -d)
   -l LEVELS, --levels=LEVELS
-                        Sets vertical level range: z0, z1 (z0,z1 >= 0, z0=z1
-                        to select just one level)
+                        Sets vertical level range: l0, l1 (l0,l1 >= 0, l0=l1
+                        to select just one level, e.g. -l 0 0 sets the ground layer)
   -t TYPE, --type=TYPE  Flexpart output type [mother|nested]
   -o OUTPUT, --output=OUTPUT
                         Images output directory
